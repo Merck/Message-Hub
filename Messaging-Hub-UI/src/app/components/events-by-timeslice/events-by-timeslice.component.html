@@ -1,0 +1,146 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ "metrics.period" | translate }}</h5>
+    <h6 class="invalid" *ngIf="periodError != ''">
+      {{ "errorsAPI." + periodError | translate }}
+    </h6>
+    <form id="period-form" class="form" [formGroup]="periodForm">
+      <div class="form-group">
+        <select
+          class="form-control"
+          formControlName="period"
+          name="period"
+          id="period"
+          (change)="onPeriodChange()"
+        >
+          <option value="past week">
+            {{ "metrics.week" | translate }}
+          </option>
+          <option value="past day">{{ "metrics.day" | translate }}</option>
+          <option value="past hour">{{ "metrics.hour" | translate }}</option>
+        </select>
+      </div>
+    </form>
+    <div>
+      <div style="display: block">
+        <canvas id="canvasPrd">{{ chartPrd }} </canvas>
+      </div>
+      <div class="center">
+        <a
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#ViewPrdModalCenter"
+          >{{ "metrics.viewDetails" | translate }}</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<!-- View Modal -->
+<div
+  class="modal fade"
+  id="ViewPrdModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="ViewTypModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title"
+          id="exampleModalLongTitle"
+          *ngIf="periodForm.get('period').value == 'past week'"
+        >
+          {{ "metrics.viewPrdweek" | translate }}
+        </h5>
+        <h5
+          class="modal-title"
+          id="exampleModalLongTitle"
+          *ngIf="periodForm.get('period').value == 'past day'"
+        >
+          {{ "metrics.viewPrdday" | translate }}
+        </h5>
+        <h5
+          class="modal-title"
+          id="exampleModalLongTitle"
+          *ngIf="periodForm.get('period').value == 'past hour'"
+        >
+          {{ "metrics.viewPrdhour" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display: block">
+          <canvas id="canvasPrdView">{{ chartPrdView }} </canvas>
+        </div>
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                *ngIf="periodForm.get('period').value == 'past week'"
+              >
+                {{ "metrics.prdweek" | translate }}
+              </th>
+              <th
+                scope="col"
+                *ngIf="periodForm.get('period').value == 'past day'"
+              >
+                {{ "metrics.prdday" | translate }}
+              </th>
+              <th
+                scope="col"
+                *ngIf="periodForm.get('period').value == 'past hour'"
+              >
+                {{ "metrics.prdhour" | translate }}
+              </th>
+              <th scope="col">{{ "metrics.objnumber" | translate }}</th>
+              <!-- <th scope="col">{{ "metrics.aggnumber" | translate }}</th> -->
+              <th scope="col">{{ "metrics.trnxnumber" | translate }}</th>
+              <th scope="col">{{ "metrics.trnsfnumber" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of results">
+              <td *ngIf="periodForm.get('period').value == 'past week'">
+                {{ result.date }}
+              </td>
+              <td *ngIf="periodForm.get('period').value == 'past day'">
+                {{ result.hours }}
+              </td>
+              <td *ngIf="periodForm.get('period').value == 'past hour'">
+                {{ result.minutes }}
+              </td>
+              <td>
+                {{ result.object }}
+              </td>
+              <!-- <td>
+                {{ result.aggregation }}
+              </td> -->
+              <td>
+                {{ result.transaction }}
+              </td>
+              <td>
+                {{ result.transformation }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "metrics.close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+[
+  {
+    "code": 1000,
+    "description": "Error getting client id from request token. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Error returned when posting masterdata to masterdata-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4002,
+    "description": "Error posting masterdata to masterdata-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4003,
+    "description": "Error returned when getting masterdata from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4004,
+    "description": "Error getting masterdata from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4005,
+    "description": "Error returned when getting masterdata status from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4006,
+    "description": "Error getting masterdata status from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4007,
+    "description": "Error returned when deleting masterdata status from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4008,
+    "description": "Error deleting masterdata status from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4009,
+    "description": "Error returned when getting all masterdata status from masterdata-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4010,
+    "description": "Error getting all masterdata status from masterdata-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error posting masterdata to masterdata-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error getting masterdata from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error getting masterdata status from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error deleting masterdata status from masterdata-service for masterdata id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9003,
+    "description": "Unknown error getting all masterdata status from masterdata-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

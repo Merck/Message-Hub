@@ -1,0 +1,92 @@
+[
+  {
+    "code": 1000,
+    "description": "Invalid XML. %s.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1001,
+    "description": "XML doesn't comply with EPCIS standard. %s.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1002,
+    "description": "XML doesn't contain Query name.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1003,
+    "description": "XML doesn't contain Query params.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1004,
+    "description": "XML doesn't contain required/supported Query params to search for Event XML.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1005,
+    "description": "The query param %s is not searchable for Event XML.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1006,
+    "description": "The value of query param %s is not present to search for Event XML.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Error when searching the event from the search service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4002,
+    "description": "Unable to get the event xmls from the event service for the organization %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4003,
+    "description": "Error returned while preparing the EPCIS Query Results XML for the organization %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4004,
+    "description": "Couldn't get organization from organization-service.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4005,
+    "description": "No Event XMLs found from the event service for matching event ids matched for the organization %s.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error when processing new query. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

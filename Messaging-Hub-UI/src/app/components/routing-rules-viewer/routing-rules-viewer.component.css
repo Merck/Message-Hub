@@ -1,0 +1,12 @@
+.pointer {
+  cursor: pointer;
+}
+.invalid {
+  color: #990000 !important;
+}
+.dest-width {
+  width: 25%;
+}
+.edit-width {
+  width: 15%;
+}

@@ -1,0 +1,13 @@
+{
+	"/admin/*": {
+		"target": "https://169.60.27.106/",
+		"secure": false,
+		"changeOrigin": true
+	},
+
+    "/oauth/*": {
+        "target": "https://169.60.27.106/",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "code": 1000,
+    "description": "Error getting client id from request token. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Error returned when posting query to query-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4002,
+    "description": "Error posting query to query-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error posting query to query-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

@@ -1,0 +1,76 @@
+[
+  {
+    "code": 1000,
+    "description": "Error getting client id from request token. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Error returned when posting event to event-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4002,
+    "description": "Error posting event to event-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4003,
+    "description": "Error returned when getting event from event-service for event id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4004,
+    "description": "Error getting event from event-service for event id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4005,
+    "description": "Error returned when getting event status from event-service for event id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4006,
+    "description": "Error getting event status from event-service for event id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+
+  {
+    "code": 9000,
+    "description": "Unknown error posting event to event-service for client id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error getting event from event-service for event id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error getting event status from event-service for event id %s. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

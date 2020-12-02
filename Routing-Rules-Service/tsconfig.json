@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "strict": true,
+    "target": "es6",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "declarationMap": true,
+    "removeComments": true,
+    "lib": [
+      "es2015"
+    ],
+    "outDir": "dist/"
+  },
+  "include": [
+    "src/**/*",
+    "./server.ts",
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules/",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "dist/",
+    "docs/",
+    ".idea/"
+  ],
+  "typedocOptions": {
+    "mode": "file",
+    "out": "docs",
+    "excludeNotExported": true,
+    "excludePrivate": true,
+    "hideGenerator": true,
+    "readme": "./README.md",
+    "hideSources": true
+  }
+}

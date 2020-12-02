@@ -1,0 +1,32 @@
+[
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Couldn't retrieve alert details from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4002,
+    "description": "Couldn't post new alert to database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4003,
+    "description": "Couldn't clear alert(s) from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

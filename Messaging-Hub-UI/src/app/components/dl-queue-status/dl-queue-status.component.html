@@ -1,0 +1,81 @@
+<h3>{{ "deadLetterQueue.title" | translate }}</h3>
+<div class="card">
+  <div class="card-body">
+    <div class="card-columns">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="invalid" *ngIf="queueEventError != ''">
+            {{ "errorsAPI." + queueEventError | translate }}
+          </h6>
+          <h5 class="card-title">
+            {{ "deadLetterQueue.events" | translate }}
+          </h5>
+          <!-- <h5 class="card-title">
+            {{ "deadLetterQueue.number" | translate: {number: numberEvent} }}
+          </h5> -->
+          <p class="card-text" *ngIf="numberEvent > 0">
+            {{
+              "deadLetterQueue.messagesQueued"
+                | translate: {number: numberEvent}
+            }}
+          </p>
+          <p class="card-text" *ngIf="numberEvent === 0">
+            {{ "deadLetterQueue.emptyQueue" | translate }}
+          </p>
+          <button
+            class="btn btn-primary"
+            [disabled]="numberEvent == 0"
+            (click)="retryEvent()"
+          >
+            {{ "deadLetterQueue.retry" | translate }}
+          </button>
+          <div
+            class="spinner-border text-dark ml-3 vertical-middle"
+            role="status"
+            *ngIf="showProgressEvent"
+          >
+            <span class="sr-only">Searching...</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h6 class="invalid" *ngIf="queueMasterDataError != ''">
+            {{ "errorsAPI." + queueMasterDataError | translate }}
+          </h6>
+          <h5 class="card-title">
+            {{ "deadLetterQueue.masterdata" | translate }}
+          </h5>
+          <!-- <h5 class="card-title">
+            {{
+              "deadLetterQueue.number" | translate: {number: numberMasterData}
+            }}
+          </h5> -->
+          <p class="card-text" *ngIf="numberMasterData > 0">
+            {{
+              "deadLetterQueue.messagesQueued"
+                | translate: {number: numberMasterData}
+            }}
+          </p>
+          <p class="card-text" *ngIf="numberMasterData === 0">
+            {{ "deadLetterQueue.emptyQueue" | translate }}
+          </p>
+          <button
+            class="btn btn-primary"
+            [disabled]="numberMasterData == 0"
+            (click)="retryMasterData()"
+          >
+            {{ "deadLetterQueue.retry" | translate }}
+          </button>
+          <div
+            class="spinner-border text-dark ml-3 vertical-middle"
+            role="status"
+            *ngIf="showProgressMasterData"
+          >
+            <span class="sr-only">Searching...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

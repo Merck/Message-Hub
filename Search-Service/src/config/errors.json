@@ -1,0 +1,104 @@
+[
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Couldn't create Elasticsearch index",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4002,
+    "description": "Couldn't index new event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4003,
+    "description": "Couldn't refresh index in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4004,
+    "description": "Couldn't update event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4005,
+    "description": "Couldn't delete event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4006,
+    "description": "Couldn't query event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4007,
+    "description": "Couldn't delete Elasticsearch index",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4008,
+    "description": "Couldn't retrieve event data by ID from Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4009,
+    "description": "Couldn't update event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4010,
+    "description": "Couldn't delete event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error while adding new event data to Elasticsearch index",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error while retrieving event data by ID from Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error while updating event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9003,
+    "description": "Unknown error while deleting event data in Elasticsearch",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9004,
+    "description": "Unknown error while deleting Elasticsearch index",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

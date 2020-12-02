@@ -1,0 +1,12 @@
+<li class="nav-item dropdown no-arrow" *ngIf="availableLanguages.length > 1">
+  <a class="nav-link dropdown-toggle mr-md-2"  id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-globe fa-fw"></i> <span class="mr-2 small">{{ currentLanguage | translate }}</span>
+  </a>
+  <div class="dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
+    <h6 class="dropdown-header">{{ 'languageSelector.selectLanguage' | translate }}</h6>
+    <a *ngFor="let lang of availableLanguages" class="dropdown-item" (click)="useLanguage(lang)">
+      <i [className]="currentLanguage === lang ? 'fa fa-fw fa-check' : 'fa fa-fw'"></i>
+      {{ lang | translate }}
+    </a>
+  </div>
+</li>

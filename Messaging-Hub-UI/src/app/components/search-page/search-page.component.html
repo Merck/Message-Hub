@@ -1,0 +1,815 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>{{ "search.title" | translate }}</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-xs-6">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="invalid" *ngIf="searchError != ''">
+          {{ "errorsAPI." + searchError | translate }}
+        </h6>
+        <form
+          id="search-form"
+          class="form"
+          [formGroup]="searchForm"
+          (ngSubmit)="search()"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="querytext">{{
+                  "search.idSearch" | translate
+                }}</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="{{ 'search.idPlaceholder' | translate }}"
+                  formControlName="querytext"
+                  name="querytext"
+                  id="querytext"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>{{ "search.startDate" | translate }}</label>
+                <mat-form-field appearance="none">
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="dd-mmm-yyyy"
+                    formControlName="startdate"
+                    name="startdate"
+                    id="startdate"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>{{ "search.endDate" | translate }}</label>
+                <mat-form-field appearance="none">
+                  <input
+                    matInput
+                    [matDatepicker]="picker1"
+                    placeholder="dd-mmm-yyyy"
+                    formControlName="enddate"
+                    name="enddate"
+                    id="enddate"
+                    [min]="searchForm.controls.startdate.value"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="type">{{ "search.eventType" | translate }}</label>
+                <select
+                  class="form-control"
+                  formControlName="type"
+                  name="type"
+                  id="type"
+                >
+                  <option value="">{{ "search.any" | translate }}</option>
+                  <option *ngFor="let item of types" [value]="item">
+                    {{ "search.types." + item | translate }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="action">{{
+                  "search.eventAction" | translate
+                }}</label>
+                <select
+                  class="form-control"
+                  formControlName="action"
+                  name="action"
+                  id="action"
+                >
+                  <option value="">{{ "search.any" | translate }}</option>
+                  <option *ngFor="let item of actions" [value]="item">
+                    {{ "search.actions." + item | translate }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="source">{{
+                  "search.eventSource" | translate
+                }}</label>
+                <select
+                  class="form-control"
+                  formControlName="source"
+                  name="source"
+                  id="source"
+                >
+                  <option value="">{{ "search.any" | translate }}</option>
+                  <option *ngFor="let item of sources" [value]="item">
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="destination">{{
+                  "search.eventDestination" | translate
+                }}</label>
+                <select
+                  class="form-control"
+                  formControlName="destination"
+                  name="destination"
+                  id="destination"
+                >
+                  <option value="">{{ "search.any" | translate }}</option>
+                  <option *ngFor="let item of destinations" [value]="item">
+                    <span *ngIf="item == 'No Route Found'">{{
+                      "search." + item | translate
+                    }}</span>
+                    <span *ngIf="item != 'No Route Found'">{{ item }}</span>
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="status">{{ "search.status" | translate }}</label>
+                <select
+                  class="form-control"
+                  formControlName="status"
+                  name="status"
+                  id="status"
+                >
+                  <option value="">{{ "search.any" | translate }}</option>
+                  <option *ngFor="let item of statuses" [value]="item">
+                    {{ "search.statuses." + item | translate }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex align-items-center">
+                <input
+                  type="button"
+                  (click)="search()"
+                  class="btn btn-primary"
+                  value="{{ 'search.search' | translate }}"
+                />
+                <div
+                  class="spinner-border text-dark ml-3"
+                  role="status"
+                  *ngIf="showProgress"
+                >
+                  <span class="sr-only">Searching...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-5" *ngIf="searched && results && results.totalResults === 0">
+  <div class="col-md-12 col-xs-6">
+    <h3>No Results</h3>
+  </div>
+</div>
+<div class="row mt-5" *ngIf="results && results.totalResults > 0">
+  <div class="col-md-12 col-xs-6">
+    <h3>{{ "search.results" | translate }}</h3>
+    <form class="form-inline">
+      <label
+        >{{ "search.show" | translate }}
+        <select
+          [(ngModel)]="results.resultsPerPage"
+          (change)="changePageSize($event.target.value)"
+          name="dtBasicExample_length"
+          aria-controls="dtBasicExample"
+          class="form-control mr-1 ml-1"
+        >
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        {{ "search.entries" | translate }}
+      </label>
+    </form>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th scope="col">
+            <a
+              (click)="
+                setSortDetails(
+                  'eventTime',
+                  eventTimeSort == ''
+                    ? 'asc'
+                    : eventTimeSort == 'asc'
+                    ? 'desc'
+                    : ''
+                )
+              "
+            >
+              {{ "search.eventTime" | translate }}&nbsp;
+              <a *ngIf="eventTimeSort == 'asc'"
+                ><i class="fa fa-sort-asc" aria-hidden="true"></i></a
+              ><a *ngIf="eventTimeSort == 'desc'"
+                ><i class="fa fa-sort-desc" aria-hidden="true"></i></a
+            ></a>
+          </th>
+          <th scope="col">
+            <a
+              (click)="
+                setSortDetails(
+                  'eventType',
+                  eventTypeSort == ''
+                    ? 'asc'
+                    : eventTypeSort == 'asc'
+                    ? 'desc'
+                    : ''
+                )
+              "
+            >
+              {{ "search.eventType" | translate }}&nbsp;
+              <a *ngIf="eventTypeSort == 'asc'"
+                ><i class="fa fa-sort-asc" aria-hidden="true"></i></a
+              ><a *ngIf="eventTypeSort == 'desc'"
+                ><i class="fa fa-sort-desc" aria-hidden="true"></i></a
+            ></a>
+          </th>
+          <th scope="col">
+            <a
+              (click)="
+                setSortDetails(
+                  'eventAction',
+                  eventActionSort == ''
+                    ? 'asc'
+                    : eventActionSort == 'asc'
+                    ? 'desc'
+                    : ''
+                )
+              "
+            >
+              {{ "search.eventAction" | translate }}&nbsp;
+              <a *ngIf="eventActionSort == 'asc'"
+                ><i class="fa fa-sort-asc" aria-hidden="true"></i></a
+              ><a *ngIf="eventActionSort == 'desc'"
+                ><i class="fa fa-sort-desc" aria-hidden="true"></i></a
+            ></a>
+          </th>
+          <th scope="col">
+            <a
+              (click)="
+                setSortDetails(
+                  'source',
+                  sourceSort == '' ? 'asc' : sourceSort == 'asc' ? 'desc' : ''
+                )
+              "
+            >
+              {{ "search.source" | translate }}&nbsp;
+              <a *ngIf="sourceSort == 'asc'"
+                ><i class="fa fa-sort-asc" aria-hidden="true"></i></a
+              ><a *ngIf="sourceSort == 'desc'"
+                ><i class="fa fa-sort-desc" aria-hidden="true"></i></a
+            ></a>
+          </th>
+          <th scope="col">
+            <a
+              (click)="
+                setSortDetails(
+                  'destination',
+                  destinationSort == ''
+                    ? 'asc'
+                    : destinationSort == 'asc'
+                    ? 'desc'
+                    : ''
+                )
+              "
+            >
+              {{ "search.destination" | translate }}&nbsp;
+              <a *ngIf="destinationSort == 'asc'"
+                ><i class="fa fa-sort-asc" aria-hidden="true"></i></a
+              ><a *ngIf="destinationSort == 'desc'"
+                ><i class="fa fa-sort-desc" aria-hidden="true"></i></a
+            ></a>
+          </th>
+          <th scope="col">
+            <a
+              (click)="
+                setSortDetails(
+                  'status',
+                  statusSort == '' ? 'asc' : statusSort == 'asc' ? 'desc' : ''
+                )
+              "
+            >
+              {{ "search.status" | translate }}&nbsp;
+              <a *ngIf="statusSort == 'asc'"
+                ><i class="fa fa-sort-asc" aria-hidden="true"></i></a
+              ><a *ngIf="statusSort == 'desc'"
+                ><i class="fa fa-sort-desc" aria-hidden="true"></i></a
+            ></a>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of results.results">
+          <td>
+            {{
+              result.timestamp
+                | date: "dd MMM yyyy HH:mm:ss-SSS z":"UTC":currentLanguage
+            }}
+          </td>
+          <td>
+            <span *ngIf="result.type">{{
+              "search.types." + result.type | translate
+            }}</span>
+          </td>
+          <td>
+            <span *ngIf="result.action">{{
+              "search.actions." + result.action | translate
+            }}</span>
+          </td>
+          <td>{{ result.source }}</td>
+          <td *ngIf="isArray(result.destination)">
+            <div *ngFor="let destination of result.destination">
+              <span *ngIf="destination == 'No Route Found'">{{
+                "search." + destination | translate
+              }}</span>
+              <span *ngIf="destination != 'No Route Found'">{{
+                destination
+              }}</span>
+            </div>
+          </td>
+          <td *ngIf="!isArray(result.destination)">
+            {{ result.destination }}
+          </td>
+          <td *ngIf="isArray(result.status)">
+            <div *ngFor="let status of result.status">
+              {{ "search.statuses." + status | translate }}
+            </div>
+          </td>
+          <td *ngIf="!isArray(result.status)">
+            {{ "search.statuses." + result.status | translate }}
+          </td>
+          <td>
+            <a
+              (click)="getEvent(result.id)"
+              data-toggle="modal"
+              data-target="#eventModalCenter"
+              ><i class="fa fa-info-circle fa-fw"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  class="row align-middle"
+  style="line-height: 32px"
+  *ngIf="results && results.totalResults > 0"
+>
+  <div class="col-sm-12 col-md-4">
+    <div
+      class="dataTables_info"
+      id="dtBasicExample_info"
+      role="status"
+      aria-live="polite"
+    >
+      {{ "search.showing" | translate }}
+      {{ (results.currentPage - 1) * results.resultsPerPage + 1 }}
+      {{ "search.to" | translate }}
+      {{
+        results.totalResults > results.currentPage * results.resultsPerPage
+          ? results.currentPage * results.resultsPerPage
+          : results.totalResults
+      }}
+      {{ "search.of" | translate }}
+      {{ results.totalResults }}
+      {{ "search.showentries" | translate }}
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-md-8" *ngIf="results && results.totalPages > 1">
+    <div
+      class="dataTables_paginate paging_simple_numbers float-right"
+      id="dtBasicExample_paginate"
+    >
+      <ul class="pagination">
+        <li
+          id="dtBasicExample_previous"
+          [ngClass]="{
+            'paginate_button page-item previous': true,
+            disabled: results.currentPage < 2
+          }"
+        >
+          <a
+            (click)="changePage(results.currentPage - 1)"
+            aria-controls="dtBasicExample"
+            data-dt-idx="0"
+            tabindex="0"
+            class="page-link"
+            >{{ "search.previous" | translate }}</a
+          >
+        </li>
+        <li
+          *ngIf="!(results.currentPage == 1 || results.currentPage == 2)"
+          [ngClass]="{
+            'paginate_button page-item': true
+          }"
+        >
+          <a
+            (click)="changePage(1)"
+            aria-controls="dtBasicExample"
+            data-dt-idx="1"
+            tabindex="0"
+            class="page-link"
+            >{{ 1 }}</a
+          >
+        </li>
+        <li
+          *ngIf="
+            !(
+              results.currentPage == 1 ||
+              results.currentPage == 2 ||
+              results.currentPage == 3
+            )
+          "
+          [ngClass]="{
+            'paginate_button page-item previous': true,
+            disabled: true
+          }"
+        >
+          <a
+            aria-controls="dtBasicExample"
+            data-dt-idx="1"
+            tabindex="0"
+            class="page-link"
+            >...</a
+          >
+        </li>
+        <li
+          *ngFor="let item of [].constructor(results.totalPages); let i = index"
+          [ngClass]="{
+            'paginate_button page-item': true,
+            active: i + 1 === results.currentPage
+          }"
+        >
+          <a
+            *ngIf="
+              results.currentPage == i + 1 ||
+              results.currentPage == i ||
+              results.currentPage == i + 2
+            "
+            (click)="changePage(i + 1)"
+            aria-controls="dtBasicExample"
+            data-dt-idx="1"
+            tabindex="0"
+            class="page-link"
+            >{{ i + 1 }}</a
+          >
+        </li>
+        <li
+          *ngIf="
+            !(
+              results.currentPage == results.totalPages - 2 ||
+              results.currentPage == results.totalPages - 1 ||
+              results.currentPage == results.totalPages
+            )
+          "
+          [ngClass]="{
+            'paginate_button page-item previous': true,
+            disabled: true
+          }"
+        >
+          <a
+            aria-controls="dtBasicExample"
+            data-dt-idx="1"
+            tabindex="0"
+            class="page-link"
+            >...</a
+          >
+        </li>
+        <li
+          *ngIf="
+            !(
+              results.currentPage == results.totalPages - 1 ||
+              results.currentPage == results.totalPages
+            )
+          "
+          [ngClass]="{
+            'paginate_button page-item': true
+          }"
+        >
+          <a
+            (click)="changePage(results.totalPages)"
+            aria-controls="dtBasicExample"
+            data-dt-idx="1"
+            tabindex="0"
+            class="page-link"
+            >{{ results.totalPages }}</a
+          >
+        </li>
+
+        <li
+          id="dtBasicExample_next"
+          [ngClass]="{
+            'paginate_button page-item next': true,
+            disabled: results.currentPage == results.totalPages
+          }"
+        >
+          <a
+            (click)="changePage(results.currentPage + 1)"
+            aria-controls="dtBasicExample"
+            data-dt-idx="7"
+            tabindex="0"
+            class="page-link"
+            >{{ "search.next" | translate }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="eventModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="eventModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ "search.eventDetails" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="invalid" *ngIf="viewError != ''">
+          {{ "errorsAPI." + viewError | translate }}
+        </h6>
+        <div *ngIf="event">
+          <div class="row">
+            <div class="col-md-3">{{ "search.eventTime" | translate }}</div>
+            <div class="col-md-9">
+              {{
+                event.timestamp
+                  | date: "dd MMM yyyy HH:mm:ss-SSS z":"UTC":currentLanguage
+              }}
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "search.eventID" | translate }}</div>
+            <div class="col-md-9">{{ event.id }}</div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "search.eventSource" | translate }}</div>
+            <div class="col-md-9">{{ event.source }}</div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "search.status" | translate }}</div>
+            <div class="col-md-9">
+              {{ "search.statuses." + event.status | translate }}
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-3">
+              {{ "search.eventDestinations" | translate }}
+            </div>
+            <div class="col-md-9">
+              <div
+                *ngFor="let destination of event.destinations; let i = index"
+                style="border: 1px solid #ccc; padding: 5px; font-size: 0.95em"
+              >
+                <div class="row">
+                  <div class="col-md-8">
+                    <b
+                      *ngIf="destination.destination_name == 'No Route Found'"
+                      >{{
+                        "search." + destination.destination_name | translate
+                      }}</b
+                    ><b
+                      *ngIf="destination.destination_name != 'No Route Found'"
+                      >{{ destination.destination_name }}</b
+                    ><br />
+                    {{ "search.status" | translate }}:
+                    {{ "search.statuses." + destination.status | translate
+                    }}<br />
+                    {{ "search.timestamp" | translate }}:
+                    {{
+                      destination.timestamp
+                        | date
+                          : "dd MMM yyyy HH:mm:ss-SSS z"
+                          : "UTC"
+                          : currentLanguage
+                    }}<br />
+                    {{ "search.response" | translate }}:
+                    {{ destination.blockchain_response }}<br />
+                  </div>
+                  <div
+                    class="col-md-4 align-center"
+                    *ngIf="destination.destination_name != 'No Route Found'"
+                  >
+                    <input
+                      type="button"
+                      (click)="view(destination.service_name, event.id, i)"
+                      data-toggle="collapse"
+                      [attr.data-target]="'#collapseExample-' + i"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                      class="btn btn-primary"
+                      value="{{ 'search.viewDetails' | translate }}"
+                    />
+                  </div>
+                </div>
+                <div class="collapse" [attr.id]="'collapseExample-' + i">
+                  <div class="card card-body">
+                    <div
+                      class="spinner-border text-dark ml-3"
+                      role="status"
+                      *ngIf="showProgress1 && index == i"
+                    >
+                      <span class="sr-only">Searching...</span>
+                    </div>
+                    <pre>{{ json_data_array[i] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-3">
+              {{ "search.originalmsg" | translate }}
+            </div>
+            <div class="col-md-9 note">
+              {{ "search.msg" | translate }}
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <ul class="nav nav-tabs" id="dataTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="xml-tab"
+                    data-toggle="tab"
+                    href="#xml"
+                    role="tab"
+                    aria-controls="xml"
+                    aria-selected="true"
+                  >
+                    {{ "search.xml" | translate }}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="json-tab"
+                    data-toggle="tab"
+                    href="#json"
+                    role="tab"
+                    aria-controls="json"
+                    aria-selected="false"
+                  >
+                    {{ "search.json" | translate }}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="json-explorer-tab"
+                    data-toggle="tab"
+                    href="#json-explorer"
+                    role="tab"
+                    aria-controls="json-explorer"
+                    aria-selected="false"
+                  >
+                    {{ "search.json-explorer" | translate }}
+                  </a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="xml"
+                  role="tabpanel"
+                  aria-labelledby="xml-tab"
+                >
+                  <pre>{{ event.xml_data }}</pre>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="json"
+                  role="tabpanel"
+                  aria-labelledby="json-tab"
+                >
+                  <pre>{{ prettyJSON }}</pre>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="json-explorer"
+                  role="tabpanel"
+                  aria-labelledby="json-explorer-tab"
+                >
+                  <div id="accordion" class="tree" *ngIf="_event.id">
+                    <mat-tree
+                      [dataSource]="nestedDataSource"
+                      [treeControl]="nestedTreeControl"
+                      class="example-tree"
+                    >
+                      <mat-tree-node
+                        *matTreeNodeDef="let node"
+                        matTreeNodeToggle
+                      >
+                        <li class="mat-tree-node">
+                          <button mat-icon-button disabled></button>
+                          {{ node.filename }}: {{ node.type }}
+                        </li>
+                      </mat-tree-node>
+
+                      <mat-nested-tree-node
+                        *matTreeNodeDef="let node; when: hasNestedChild"
+                      >
+                        <li>
+                          <div class="mat-tree-node">
+                            <button
+                              mat-icon-button
+                              matTreeNodeToggle
+                              [attr.aria-label]="'toggle ' + node.filename"
+                            >
+                              <mat-icon class="mat-icon-rtl-mirror">
+                                {{
+                                  nestedTreeControl.isExpanded(node)
+                                    ? "expand_more"
+                                    : "chevron_right"
+                                }}
+                              </mat-icon>
+                            </button>
+                            {{ node.filename }}
+                          </div>
+                          <ul
+                            [class.example-tree-invisible]="
+                              !nestedTreeControl.isExpanded(node)
+                            "
+                          >
+                            <ng-container matTreeNodeOutlet></ng-container>
+                          </ul>
+                        </li>
+                      </mat-nested-tree-node>
+                    </mat-tree>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

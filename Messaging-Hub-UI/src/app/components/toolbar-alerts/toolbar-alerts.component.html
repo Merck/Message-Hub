@@ -1,0 +1,41 @@
+<li class="nav-item dropdown no-arrow">
+  <a
+    class="nav-link dropdown-toggle mr-md-2"
+    id="alertsDropdown"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <i class="fa fa-bell fa-fw"></i>
+    <!-- Counter - Alerts -->
+    <span class="badge badge-danger badge-counter" *ngIf="total$ > 0">{{
+      total$
+    }}</span>
+  </a>
+  <!-- Dropdown - Alerts -->
+  <div
+    class="dropdown-list dropdown-menu dropdown-menu-right"
+    aria-labelledby="alertsDropdown"
+  >
+    <div class="pr-3 pl-3" *ngIf="total$ === 0">
+      {{ "toolbar.alerts.noAlerts" | translate }}
+    </div>
+    <a class="dropdown-item" *ngIf="errors$ > 0" (click)="home()"
+      >{{ errors$ }} {{ "toolbar.alerts.errors" | translate }}</a
+    >
+    <a class="dropdown-item" *ngIf="warnings$ > 0" (click)="home()"
+      >{{ warnings$ }} {{ "toolbar.alerts.warnings" | translate }}</a
+    >
+    <div class="dropdown-divider" *ngIf="total$ > 0 && isOrgAdmin"></div>
+    <a
+      class="dropdown-item"
+      data-toggle="modal"
+      data-target="#clearAlertsModal"
+      *ngIf="total$ > 0 && isOrgAdmin"
+    >
+      <i class="fa fa-trash fa-sm fa-fw"></i>
+      {{ "toolbar.alerts.clearAll" | translate }}
+    </a>
+  </div>
+</li>

@@ -1,0 +1,343 @@
+<div class="row mt-5">
+  <div class="col-md-12 col-xs-6">
+    <div class="text-center" *ngIf="showProgress1">
+      <span class="spinner-border" role="status" aria-hidden="true"></span>
+      <strong class="vertical-center"
+        >{{ "app.loading" | translate }}...</strong
+      >
+    </div>
+    <h6 class="invalid" *ngIf="mainError != ''">
+      {{ "errorsAPI." + mainError | translate }}
+    </h6>
+    <h6 *ngIf="!(results?.length > 0)">{{ "privacy.nodata" | translate }}</h6>
+    <table
+      class="table table-striped mt-2"
+      *ngIf="results && results.length > 0"
+    >
+      <thead>
+        <tr>
+          <th scope="col">{{ "privacy.order" | translate }}</th>
+          <th scope="col">{{ "privacy.dataElement" | translate }}</th>
+          <th scope="col">{{ "privacy.privacySettings" | translate }}</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="isOrgAdmin">
+        <tr
+          *ngFor="let result of results; let i = index"
+          class="pointer"
+          cdkDrag
+        >
+          <td>{{ i + 1 }}</td>
+          <td>
+            {{ "privacy.types." + result.datafield_type | translate }}:
+            {{ result.datafield_display }}
+          </td>
+          <td>
+            {{ "privacy." + privacySetting(result.can_store) | translate }}
+          </td>
+          <td>
+            <a
+              class="btn"
+              data-toggle="modal"
+              data-target="#AddEditModalCenter"
+              (click)="
+                edit = true;
+                add = false;
+                delete = false;
+                reorder = false;
+                selected(result.id);
+                AddEditError = ''
+              "
+              ><i class="fa fa-edit"></i
+            ></a>
+            <a
+              class="btn"
+              data-toggle="modal"
+              data-target="#confirmModalCenter"
+              (click)="
+                delete = true;
+                add = false;
+                edit = false;
+                reorder = false;
+                selected(result.id);
+                DeleteReorderError = ''
+              "
+              ><i class="fa fa-trash"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isOrgAdmin">
+        <tr *ngFor="let result of results; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            {{ "privacy.types." + result.datafield_type | translate }}:
+            {{ result.datafield_display }}
+          </td>
+          <td>
+            {{ "privacy." + privacySetting(result.can_store) | translate }}
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row mt-3" *ngIf="isOrgAdmin">
+  <div class="col-md-12 col-xs-6">
+    <a
+      class="btn btn-primary mt-3"
+      data-toggle="modal"
+      data-target="#AddEditModalCenter"
+      (click)="
+        add = true;
+        edit = false;
+        delete = false;
+        reorder = false;
+        rulesForm.reset();
+        resetData();
+        AddEditError = ''
+      "
+      >{{ "privacy.addNewRule" | translate }}</a
+    >
+  </div>
+</div>
+<!-- Add/Edit Modal -->
+<div
+  class="modal fade"
+  id="AddEditModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="AddEditModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="edit" class="modal-title" id="exampleModalLongTitle">
+          {{ "privacy.editRule" | translate }}
+        </h5>
+        <h5 *ngIf="add" class="modal-title" id="exampleModalLongTitle">
+          {{ "privacy.addRule" | translate }}
+        </h5>
+        <button
+          type="button"
+          #closebutton1
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="invalid" *ngIf="AddEditError != ''">
+          {{ "errorsAPI." + AddEditError | translate }}
+        </h6>
+        <form id="rules-form" class="form" [formGroup]="rulesForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="eventType">{{
+                  "privacy.eventType" | translate
+                }}</label
+                ><br />
+                <select
+                  class="form-control"
+                  formControlName="eventType"
+                  name="eventType"
+                  id="eventType"
+                  (change)="onEventTypeChange($event)"
+                  required
+                >
+                  <option *ngFor="let item of eventTypes" [value]="item">
+                    {{ "privacy.types." + item | translate }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    rulesForm.get('eventType').hasError('required') &&
+                    rulesForm.get('eventType').touched
+                  "
+                  class="invalid"
+                >
+                  {{ "privacy.eventTypeRequiredError" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="dataElement">{{
+                  "privacy.dataElement" | translate
+                }}</label
+                ><br />
+                <select
+                  class="form-control"
+                  formControlName="dataElement"
+                  name="dataElement"
+                  id="dataElement"
+                  required
+                >
+                  <option [value]="null" disabled hidden></option>
+                  <option *ngFor="let item of dataElements" [value]="item.id">
+                    {{ item.display_name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    rulesForm.get('dataElement').hasError('required') &&
+                    rulesForm.get('dataElement').touched
+                  "
+                  class="invalid"
+                >
+                  {{ "privacy.dataRequiredError" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <br />
+                <label class="form-check-label">
+                  <input
+                    type="checkbox"
+                    id="privacySettings"
+                    value="privacySettings"
+                    formControlName="privacySettings"
+                  />
+                  {{ "privacy.store" | translate }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            (click)="cancel()"
+          >
+            {{ "privacy.cancel" | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="validateForm()"
+          >
+            {{ "privacy.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Confirmation Modal -->
+<div
+  class="modal fade"
+  id="confirmModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="confirmModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="edit" class="modal-title">
+          {{ "privacy.editConfirm" | translate }}
+        </h5>
+        <h5 *ngIf="add" class="modal-title">
+          {{ "privacy.addConfirm" | translate }}
+        </h5>
+        <h5 *ngIf="delete" class="modal-title">
+          <h6 class="invalid" *ngIf="DeleteReorderError != ''">
+            {{ "errorsAPI." + DeleteReorderError | translate }}
+          </h6>
+          {{ "privacy.deleteConfirm" | translate }}
+        </h5>
+        <h5 *ngIf="reorder" class="modal-title">
+          <h6 class="invalid" *ngIf="DeleteReorderError != ''">
+            {{ "errorsAPI." + DeleteReorderError | translate }}
+          </h6>
+          {{ "privacy.reorderConfirm" | translate }}
+        </h5>
+        <button
+          type="button"
+          #closebutton2
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button
+          *ngIf="edit"
+          type="button"
+          [disabled]="showProgress"
+          class="btn btn-primary"
+          (click)="editRR()"
+        >
+          {{ "privacy.ok" | translate }}
+        </button>
+        <button
+          *ngIf="add"
+          type="button"
+          [disabled]="showProgress"
+          class="btn btn-primary"
+          (click)="addRR()"
+        >
+          {{ "privacy.ok" | translate }}
+        </button>
+        <button
+          *ngIf="delete"
+          type="button"
+          [disabled]="showProgress"
+          class="btn btn-primary"
+          (click)="deleteRR()"
+        >
+          {{ "privacy.ok" | translate }}
+        </button>
+        <button
+          *ngIf="reorder"
+          type="button"
+          [disabled]="showProgress"
+          class="btn btn-primary"
+          (click)="reorderRR()"
+        >
+          {{ "privacy.ok" | translate }}
+        </button>
+        <button
+          *ngIf="reorder"
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelReorder()"
+        >
+          {{ "privacy.cancel" | translate }}
+        </button>
+        <button
+          *ngIf="!reorder"
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="cancel()"
+        >
+          {{ "privacy.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

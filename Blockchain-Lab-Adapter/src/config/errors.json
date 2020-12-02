@@ -1,0 +1,38 @@
+[
+  {
+    "code": 1000,
+    "description": "Error processing event %s. Reason: %s ",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 2000,
+    "description": "Couldn't find organization's credentials for connecting to the blockchain lab API in organization_credentials table",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 2001,
+    "description": "Couldn't decrypt configured password from organization_credentials table.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 3000,
+    "description": "Error writing event %s to blockchain. Reason: %s ",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 3001,
+    "description": "Error writing event %s to blockchain. Unable to authenticate to blockchain using credentials in organization_credentials table.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error when processing event data",
+    "severity": "ERROR",
+    "alertable": true
+  }
+]

@@ -1,0 +1,986 @@
+[
+  {
+    "code": 1000,
+    "description": "Error getting organization id from request token.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Error returned when fetching all alerts from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4002,
+    "description": "Error when fetching all alerts from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4003,
+    "description": "Error returned when fetching the alert %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4004,
+    "description": "Error when fetching the alert %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4005,
+    "description": "Error returned when fetching alerts count from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4006,
+    "description": "Error when fetching alerts count from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4007,
+    "description": "Error returned when clearing all from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4008,
+    "description": "Error when clearing all from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4009,
+    "description": "Error returned when clearing the alert %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4010,
+    "description": "Error when clearing the alert %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4011,
+    "description": "Error returned when searching the event from the search service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4012,
+    "description": "Error when searching the event from the search service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4013,
+    "description": "Error returned when fetching the event %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4014,
+    "description": "Error when fetching the event %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4015,
+    "description": "Error returned when fetching distinct event sources from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4016,
+    "description": "Error when fetching distinct event sources from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4017,
+    "description": "Error returned when fetching distinct event destinations from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4018,
+    "description": "Error when fetching distinct event destinations from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4019,
+    "description": "Error returned when fetching count of messages in processing queues from the event and masterdata services for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4020,
+    "description": "Error when fetching count of messages in processing queues from the event and masterdata services for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4021,
+    "description": "Error returned when fetching count of failed messages in deadletter queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4022,
+    "description": "Error when fetching count of failed messages in deadletter queues from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4023,
+    "description": "Error returned when retrying failed messages in deadletter queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4024,
+    "description": "Error when retrying failed messages in deadletter queues from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4025,
+    "description": "Error returned when setting the event queue status to pause/resume of processing queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4026,
+    "description": "Error when setting the event queue status to pause/resume of processing queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4027,
+    "description": "Error returned when fetching the event processing queue status from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4028,
+    "description": "Error when fetching the event processing queue status from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4029,
+    "description": "Error returned when fetching the organization of user from organization service. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4030,
+    "description": "Error when fetching the organization of user from organization service. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4031,
+    "description": "Error returned when updating the organization from organization service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4032,
+    "description": "Error when updating the organization from organization service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4033,
+    "description": "Error when fetching the organization details from organization service based on user's subject id. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4034,
+    "description": "Error returned when fetching the organization id from organization service. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4035,
+    "description": "Error when fetching the organization id from organization service. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4036,
+    "description": "Error returned when fetching the list of organization users from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4037,
+    "description": "Error when fetching the list of organization users from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4038,
+    "description": "Error returned when creating a new organization user from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4039,
+    "description": "Error when creating a new organization user from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4040,
+    "description": "Error returned when fetching user details of %s from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4041,
+    "description": "Error when fetching user details of %s from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4042,
+    "description": "Error returned when updating the user details of %s from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4043,
+    "description": "Error when deleting the user %s from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4044,
+    "description": "Error returned when deleting the user %s from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4045,
+    "description": "Error when updating the user details of %s from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4046,
+    "description": "Error returned when fetching all master data from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4047,
+    "description": "Error when fetching all master data from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4048,
+    "description": "Error returned when fetching the master data %s from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4049,
+    "description": "Error when fetching the master data %s from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4050,
+    "description": "Error returned when retrying the failed masterdata messages in deadletter queue from RabbitMQ for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4051,
+    "description": "Error when retrying the failed masterdata messages in deadletter queue from RabbitMQ for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4052,
+    "description": "Error returned when fetching the count of failed masterdata messages in deadletter queue from RabbitMQ for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4053,
+    "description": "Error when fetching the count of failed masterdata messages in deadletter queue from RabbitMQ for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4054,
+    "description": "Error returned when deleting the masterdata %s from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4055,
+    "description": "Error when deleting the masterdata %s from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4056,
+    "description": "Error returned when setting the masterdata queue status to pause/resume of processing queue from the masterdata service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4057,
+    "description": "Error when setting the masterdata queue status to pause/resume of processing queue from the masterdata service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4058,
+    "description": "Error returned when fetching the count of messages processed from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4059,
+    "description": "Error when fetching the count of messages processed from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4060,
+    "description": "Error returned when fetching the event messages processed for a given period from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4061,
+    "description": "Error when fetching the event messages processed for a given period from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4062,
+    "description": "Error returned when fetching the event messages processed by type from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4063,
+    "description": "Error when fetching the event messages processed by type from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4064,
+    "description": "Error returned when fetching the event messages processed by source from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4065,
+    "description": "Error when fetching the event messages processed by source from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4066,
+    "description": "Error returned when fetching the event messages processed by destination from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4067,
+    "description": "Error when fetching the event messages processed by destination from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4068,
+    "description": "Error returned when fetching the event messages processed by status from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4069,
+    "description": "Error when fetching the event messages processed by status from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4070,
+    "description": "Error returned when fetching the list of configured data fields for data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4071,
+    "description": "Error when fetching the list of configured data fields for data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4072,
+    "description": "Error returned when fetching the data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4073,
+    "description": "Error when fetching the data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4074,
+    "description": "Error returned when creating the data privacy rule in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4075,
+    "description": "Error when creating the data privacy rule in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4076,
+    "description": "Error returned when fetching the data privacy rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4077,
+    "description": "Error when fetching the data privacy rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4078,
+    "description": "Error returned when updating the data privacy rule %s in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4079,
+    "description": "Error when updating the data privacy rule %s in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4080,
+    "description": "Error returned when reordering the data privacy rules in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4081,
+    "description": "Error when reordering the data privacy rules in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4082,
+    "description": "Error returned when deleting the data privacy rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4083,
+    "description": "Error when deleting the data privacy rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4084,
+    "description": "Error returned when fetching the audit history of data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4085,
+    "description": "Error when fetching the audit history of data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4086,
+    "description": "Error returned when fetching the list of configured data fields for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4087,
+    "description": "Error when fetching the list of configured data fields for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4088,
+    "description": "Error returned when fetching the list of configured comparators for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4089,
+    "description": "Error when fetching the list of configured comparators for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4090,
+    "description": "Error returned when fetching the list of configured destinations for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4091,
+    "description": "Error when fetching the list of configured destinations for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4092,
+    "description": "Error returned when fetching the routing rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4093,
+    "description": "Error when fetching the routing rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4094,
+    "description": "Error returned when creating the routing rule in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4095,
+    "description": "Error when creating the routing rule in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4096,
+    "description": "Error returned when fetching the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4097,
+    "description": "Error when fetching the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4098,
+    "description": "Error returned when updating the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4099,
+    "description": "Error when updating the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4100,
+    "description": "Error returned when reordering the routing rules in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4101,
+    "description": "Error when reordering the routing rules in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4102,
+    "description": "Error returned when deleting the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4103,
+    "description": "Error when deleting the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4104,
+    "description": "Error returned when fetching the audit history of routing rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4105,
+    "description": "Error when fetching the audit history of routing rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4106,
+    "description": "Error returned when fetching the user details from the OAUTH/User Management server. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4107,
+    "description": "Error when fetching the user details from the OAUTH/User Management server. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4108,
+    "description": "Error returned when updating the user details in the OAUTH/User Management server. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4109,
+    "description": "Error when updating the user details in the OAUTH/User Management server. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4110,
+    "description": "Error retrieving event from blockchain for event id %s on blockchain %s for org %s: %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4111,
+    "description": "Error retrieving masterdata from blockchain for masterdata id %s on blockchain %s for org %s: %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error when fetching all alerts from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error when fetching the alert %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error when fetching alerts count from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9003,
+    "description": "Unknown error when clearing all alerts from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9004,
+    "description": "Unknown error when clearing the alert %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9005,
+    "description": "Unknown error when searching the event from the search service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9006,
+    "description": "Unknown error when fetching the event %s from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9007,
+    "description": "Unknown error when fetching distinct event sources from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9008,
+    "description": "Unknown error when fetching distinct event destinations from the database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9009,
+    "description": "Unknown error when fetching count of messages in processing queues from the event and masterdata services for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9010,
+    "description": "Unknown error when fetching count of failed messages in deadletter queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9011,
+    "description": "Unknown error when retrying failed messages in deadletter queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9012,
+    "description": "Unknown error when setting the event queue status to pause/resume of processing queue from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9013,
+    "description": "Unknown error when fetching the event processing queue status from the event service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9014,
+    "description": "Unknown error when fetching the organization of user from organization service. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9015,
+    "description": "Unknown error when updating the organization from organization service for the organozation id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9016,
+    "description": "Unknown error when fetching the organization id from organization service. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9017,
+    "description": "Unknown error when fetching the list of organization users from organization service for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9018,
+    "description": "Unknown error when fetching all master data from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9019,
+    "description": "Unknown error when fetching the master data %s from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9020,
+    "description": "Unknown error when retrying the failed masterdata messages in deadletter queue from RabbitMQ for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9021,
+    "description": "Unknown error when fetching the count of failed masterdata messages in deadletter queue from RabbitMQ for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9022,
+    "description": "Unknown error when deleting the masterdata %s from database for organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9023,
+    "description": "Unknown error when setting the masterdata queue status to pause/resume of processing queue from the masterdata service for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9024,
+    "description": "Unknown error when fetching the count of messages processed from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9025,
+    "description": "Unknown error when fetching the event messages processed for a given period from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9026,
+    "description": "Unknown error when fetching the event messages processed by type from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9027,
+    "description": "Unknown error when fetching the event messages processed by source from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9028,
+    "description": "Unknown error when fetching the event messages processed by destination from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9029,
+    "description": "Unknown error when fetching the event messages processed by status from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9030,
+    "description": "Unknown error when fetching the list of configured data fields for data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9031,
+    "description": "Unknown error when fetching the data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9032,
+    "description": "Unknown error when creating the data privacy rule in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9033,
+    "description": "Unknown error when fetching the data privacy rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9034,
+    "description": "Unknown error when updating the data privacy rule %s in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9035,
+    "description": "Unknown error when reordering the data privacy rules in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9036,
+    "description": "Unknown error when deleting the data privacy rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9037,
+    "description": "Unknown error when fetching the audit history of data privacy rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9038,
+    "description": "Unknown error when fetching the list of configured data fields for routing rules from database . %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9039,
+    "description": "Unknown error when fetching the list of configured comparators for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9040,
+    "description": "Unknown error when fetching the list of configured destinations for routing rules from database. %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9041,
+    "description": "Unknown error when fetching the routing rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9042,
+    "description": "Unknown error when creating the routing rule in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9043,
+    "description": "Unknown error when fetching the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9044,
+    "description": "Unknown error when updating the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9045,
+    "description": "Unknown error when reordering the routing rules in database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9046,
+    "description": "Unknown error when deleting the routing rule %s from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9047,
+    "description": "Unknown error when fetching the audit history of routing rules from database for the organization id %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9048,
+    "description": "Unknown error when event from blockchain for event id %s on blockchain %s for org %s: %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9049,
+    "description": "Unknown error when retrieving masterdata from blockchain for masterdata id %s on blockchain %s for org %s: %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

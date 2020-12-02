@@ -1,0 +1,47 @@
+{
+  "name": "data-privacy-rules-service",
+  "version": "1.0.0",
+  "description": "Microservice for handling data privacy rules functions",
+  "main": "dist/server.ts",
+  "private": true,
+  "repository": {
+    "url": "git+ssh://git@github.ibm.com:Merck-Messaging-Hub/Data-Privacy-Rules-Service.git",
+    "type": "git"
+  },
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "prod": "tsc && cp -rv src dist && ts-node src/server.ts",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "build": "tsc",
+    "build:watch": "onchange 'src/**/*.ts' -- npm run build",
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watchAll",
+    "view:coverage": "serve --config serve.json coverage/lcov-report",
+    "clean": "rm -rf node_modules package-lock.json && npm install"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.3",
+    "axios-mock-adapter": "^1.18.2",
+    "onchange": "^7.0.2",
+    "serve": "^11.3.2",
+    "ts-jest": "^25.5.1"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.7.1",
+    "@types/pg": "^7.14.4",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^25.5.4",
+    "jsonpath": "^1.0.2",
+    "log4js": "^6.1.2",
+    "pg": "^8.3.0",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.1.0",
+    "typescript": "^3.7.5"
+  }
+}

@@ -1,0 +1,6 @@
+.pointer {
+  cursor: pointer;
+}
+.invalid {
+  color: #990000 !important;
+}

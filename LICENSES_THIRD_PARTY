@@ -1,0 +1,74 @@
+List of third-party dependencies grouped by their license type.
+
+
+    Apache Software License, Version 2.0:
+
+        * @elastic/elasticsearc - 7.8.0 - https://www.npmjs.com/package/@elastic/elasticsearch
+        * log4js-node - 6.3.0 - https://www.npmjs.com/package/log4js
+        * rxjs - 6.4.0 - https://www.npmjs.com/package/rxjs
+        * tslint - 6.1.3 - https://www.npmjs.com/package/tslint
+        * TypeScript - 3.9.7 - https://www.npmjs.com/package/typescript
+
+
+    BSD License:
+
+        * scottmotte/dotenv - 8.2.0 - https://www.npmjs.com/package/dotenv
+
+
+    ISC License:
+
+        * json-rules-engine - 5.0.3 - https://www.npmjs.com/package/json-rules-engine
+        * ng2-charts - 2.3.2 - https://www.npmjs.com/package/ng2-charts
+
+
+    MIT License:
+
+        * @types/node - 13.7.1 - https://www.npmjs.com/package/@types/node
+        * @angular/animations - 8.2.7 - https://www.npmjs.com/package/@angular/animations
+        * @angular/cdk - 8.2.3 - https://www.npmjs.com/package/@angular/cdk
+        * @angular/common - 8.2.7 - https://www.npmjs.com/package/@angular/common
+        * @angular/compiler - 8.2.7 - https://www.npmjs.com/package/@angular/compiler
+        * @angular/core - 8.2.7 - https://www.npmjs.com/package/@angular/core
+        * @angular/elements - 8.2.7 - https://www.npmjs.com/package/@angular/elements
+        * @angular/flex-layout - 8.0.0-beta.26 - https://www.npmjs.com/package/@angular/flex-layout
+        * @angular/forms - 8.2.7 - https://www.npmjs.com/package/@angular/forms
+        * @angular/material - 8.2.3 - https://www.npmjs.com/package/@angular/material
+        * @angular/platform-browser - 8.2.7 - https://www.npmjs.com/package/@angular/platform-browser
+        * @angular/platform-browser-dynamic - 8.2.7 - https://www.npmjs.com/package/@angular/platform-browser-dynamic
+        * @angular/router - 8.2.7 - https://www.npmjs.com/package/@angular/router
+        * @ngx-translate/core - 12.1.0 - https://www.npmjs.com/package/@ngx-translate/core
+        * @ngx-translate/http-loader - 6.0.0 - https://www.npmjs.com/package/@ngx-translate/http-loader
+        * @types/cookie-parser - 1.4.2 - https://www.npmjs.com/package/@types/cookie-parser
+        * @types/express - 4.17.8 - https://www.npmjs.com/package/@types/express
+        * @types/jest - 26.0.9 - https://www.npmjs.com/package/@types/jest
+        * @types/jwt-decode - 2.2.1 - https://www.npmjs.com/package/@types/jwt-decode
+        * @types/pg - 7.14.4 - https://www.npmjs.com/package/@types/pg
+        * @types/uuid - 8.3.0 - https://www.npmjs.com/package/@types/uuid
+        * amqp.node - 0.6.0 - https://www.npmjs.com/package/amqplib
+        * axios - 0.19.2 - https://www.npmjs.com/package/axios
+        * axios-mock-adapter - 1.18.2 - https://www.npmjs.com/package/axios-mock-adapter
+        * body-parser - 1.19.0 - https://www.npmjs.com/package/body-parser
+        * chart.js - 2.9.3 - https://www.npmjs.com/package/chart.js?activeTab=readme
+        * chartjs-plugin-labels - 1.1.0 - https://www.npmjs.com/package/chartjs-plugin-labels
+        * Cookie Parser - 1.4.5 - https://www.npmjs.com/package/cookie-parser
+        * dchester/jsonpath - 1.0.2 - https://www.npmjs.com/package/jsonpath
+        * expressjs - 4.17.1 - https://www.npmjs.com/package/express
+        * fast-xml-parser - 3.17.4 - https://www.npmjs.com/package/fast-xml-parser
+        * hammerjs - 2.0.8 - https://www.npmjs.com/package/hammerjs
+        * Jest from Facebook - 25.5.4 - https://www.npmjs.com/package/jest
+        * jwt-decode - 2.2.0 - https://www.npmjs.com/package/jwt-decode
+        * libxmljs - 0.19.7 - https://www.npmjs.com/package/libxmljs
+        * ng-multiselect-dropdown - 0.2.10 - https://www.npmjs.com/package/ng-multiselect-dropdown
+        * node_postgres - 8.3.3 - https://www.npmjs.com/package/pg
+        * node-cors - 2.8.5 - https://www.npmjs.com/package/cors
+        * node-uuid - 8.3.0 - https://www.npmjs.com/package/uuid
+        * swagger-jsdoc - 4.0.0 - https://www.npmjs.com/package/swagger-jsdoc
+        * swagger-ui-express - 4.1.4 - https://www.npmjs.com/package/swagger-ui-express
+        * ts-jest - 25.5.1 - https://www.npmjs.com/package/ts-jest
+        * ts-node - 8.10.2 - https://www.npmjs.com/package/ts-node
+        * xsd-schema-validator - 0.6.0 - https://www.npmjs.com/package/xsd-schema-validator
+        * zone.js - 0.9.1 - https://www.npmjs.com/package/zone.js?activeTab=readme
+
+    Zero-Clause BSD:
+
+        * tslib - 1.10.0 - https://www.npmjs.com/package/tslib

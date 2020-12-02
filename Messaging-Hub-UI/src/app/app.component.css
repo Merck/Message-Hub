@@ -1,0 +1,8 @@
+
+.sign-in-background{
+	height:100%;
+	background-image: url("/assets/bg.jpg");
+	background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}

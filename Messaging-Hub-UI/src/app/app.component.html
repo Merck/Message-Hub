@@ -1,0 +1,141 @@
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper" *ngIf="loggedin">
+    <div class="sidebar-heading" style="text-align: center">
+      <a class="navbar-brand">
+        <img src="/assets/hub-owner-logo.png" height="50" alt="" />
+      </a>
+    </div>
+    <div class="list-group list-group-flush">
+      <a
+        routerLink="/home"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-light"
+      >
+        <i class="fa fa-fw fa-home" aria-hidden="true"></i>
+        {{ "app.navigation.home" | translate }}
+      </a>
+      <a
+        routerLink="/search"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-light"
+      >
+        <i class="fa fa-fw fa-search" aria-hidden="true"></i>
+        {{ "app.navigation.events" | translate }}
+      </a>
+      <a
+        routerLink="/mstrdata"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-light"
+      >
+        <i class="fa fa-fw fa-database" aria-hidden="true"></i>
+        {{ "app.navigation.masterData" | translate }}
+      </a>
+      <a
+        routerLink="/routing"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-light"
+      >
+        <i class="fa fa-fw fa-sitemap" aria-hidden="true"></i>
+        {{ "app.navigation.routingRules" | translate }}
+      </a>
+      <a
+        routerLink="/privacy"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-light"
+      >
+        <i class="fa fa-fw fa-user-secret" aria-hidden="true"></i>
+        {{ "app.navigation.dataPrivacyRules" | translate }}
+      </a>
+      <a
+        routerLink="/metrics"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-light"
+      >
+        <i class="fa fa-fw fa-tachometer" aria-hidden="true"></i>
+        {{ "app.navigation.metrics" | translate }}
+      </a>
+    </div>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div
+    id="page-content-wrapper"
+    [ngClass]="loggedin ? '' : 'sign-in-background'"
+  >
+    <nav class="navbar navbar-expand-lg sticky-top shadow merck-teal-bg">
+      <span class="navbar-brand mb-0 h1">{{ "app.title" | translate }}</span>
+      <div *ngIf="loggedin" fxShow="false" fxShow.gt-md="true">
+        <toolbar-search></toolbar-search>
+      </div>
+      <ul class="navbar-nav flex-row ml-md-auto">
+        <language-selector></language-selector>
+        <toolbar-alerts *ngIf="loggedin"></toolbar-alerts>
+        <toolbar-user *ngIf="loggedin"></toolbar-user>
+      </ul>
+    </nav>
+    <div class="container-fluid p-5 scroll">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<!-- Modals -->
+<div
+  class="modal fade"
+  id="clearAlertsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="clearAlertsModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <h6 class="invalid" *ngIf="clearAlertError != ''">
+            {{ "errorsAPI." + clearAlertError | translate }}
+          </h6>
+          {{ "clearAlertsDialog.title" | translate }}
+        </h5>
+        <button
+          type="button"
+          #closebutton
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="clearAll()"
+          [disabled]="showProgress"
+        >
+          {{ "clearAlertsDialog.proceed" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="close()"
+        >
+          {{ "clearAlertsDialog.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

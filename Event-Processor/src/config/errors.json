@@ -1,0 +1,140 @@
+[
+  {
+    "code": 1001,
+    "description": "Received a message in processing queue without a content type.  Assuming it is application/json",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1002,
+    "description": "Received a message in processing queue without a content encoding.  Assuming it is UTF-8",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 1003,
+    "description": "Received a message in processing queue without an event id",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 1004,
+    "description": "Received a message in processing queue without a client id",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 1005,
+    "description": "Received a message in processing queue without a organization id from client id %s",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 1006,
+    "description": "Received a message in processing queue without any content from client id %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 1007,
+    "description": "Received a message in processing queue with empty content from client id %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 2000,
+    "description": "Unable to determine a route for event with ID %s based on current routing rules",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 2010,
+    "description": "Reconnecting to Rabbit MQ.",
+    "severity": "WARNING",
+    "alertable": false
+  },
+  {
+    "code": 2011,
+    "description": "Reconnecting to Postgres Database.",
+    "severity": "WARNING",
+    "alertable": false
+  },
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Error retrieving the routing rules for organization from routing rules service for event with ID %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4002,
+    "description": "Failed to process event with id %s to the required destination Blockchain adapter: %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4003,
+    "description": "Unable to update event with id %s to failed status in search service",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4004,
+    "description": "Unable to update event with id %s to failed status in database",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4005,
+    "description": "Unable to update event destination with id %s to failed status in database",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4006,
+    "description": "Couldn't connect to RabbitMQ.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4007,
+    "description": "Couldn't create RabbitMQ channel.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4008,
+    "description": "RabbitMQ deadletter queue error.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4009,
+    "description": "Unknown RabbitMQ queue error.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4010,
+    "description": "Error in connecting to Postgres database.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4011,
+    "description": "Unable to get the display name of the adapter service name %s from the database for event id %s",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9000,
+    "description": "An unknown error occurred while determining a route for event with ID %s. %s",
+    "severity": "ERROR",
+    "alertable": true
+  }
+]

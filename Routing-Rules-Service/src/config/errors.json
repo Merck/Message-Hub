@@ -1,0 +1,122 @@
+[
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Couldn't retrieve the list of configured data fields from database.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4002,
+    "description": "Couldn't retrieve the list of configured comparators from database.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4003,
+    "description": "Couldn't retrieve the list of configured adapters from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4004,
+    "description": "Couldn't retrieve routing rules from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4005,
+    "description": "Couldn't create the routing rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4006,
+    "description": "Couldn't retrieve routing rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4007,
+    "description": "Couldn't update the routing rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4008,
+    "description": "Couldn't update the ordering the list of routing rules in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4009,
+    "description": "Couldn't delete the routing rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4010,
+    "description": "Couldn't retrieve the audit history of routing rules from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error while retrieving the list of configured data fields from database.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error while retrieving the list of configured comparators from database.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9003,
+    "description": "Unknown error while retrieving the list of configured adapters from database.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9004,
+    "description": "Unknown error while retrieving routing rules from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9005,
+    "description": "Unknown error while creating the routing rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9006,
+    "description": "Unknown error while retrieving routing rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9007,
+    "description": "Unknown error while updating the routing rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9008,
+    "description": "Unknown error while deleting the routing rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9009,
+    "description": "Unknown error while retrieving the audit history of routing rules from database.",
+    "severity": "ERROR",
+    "alertable": true
+  }
+]

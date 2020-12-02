@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ "metrics.processed" | translate }}
+      <h6 class="invalid" *ngIf="mainError != ''">
+        {{ "errorsAPI." + mainError | translate }}
+      </h6>
+    </h5>
+    <div class="card-columns">
+      <div class="card">
+        <div class="card-body">
+          <h5>{{ "metrics.events" | translate }}</h5>
+          <h1>{{ totalEvent$ }}</h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>{{ "metrics.masterdata" | translate }}</h5>
+          <h1>{{ totalMasterData$ }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

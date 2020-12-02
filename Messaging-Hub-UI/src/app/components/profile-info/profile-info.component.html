@@ -1,0 +1,224 @@
+<div id="change-profile-row" class="row">
+  <div id="change-profile-column" class="col-md-12">
+    <form id="change-profile-form" class="form" [formGroup]="profileForm">
+      <h3>{{ "profileInfo.title" | translate }}</h3>
+      <hr />
+      <h6 class="invalid" *ngIf="profileError != ''">
+        {{ "errorsAPI." + profileError | translate }}
+      </h6>
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <label>{{ "profileInfo.roles" | translate }}</label>
+        </div>
+        <div class="col-md-4">
+          <p *ngFor="let role of roles">
+            {{ "toolbar.user.role." + role | translate }}
+          </p>
+        </div>
+      </div>
+      <hr />
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <label>{{ "profileInfo.fname" | translate }}</label>
+        </div>
+        <div class="col-md-4">
+          <input
+            *ngIf="isEditFirstNameEnable"
+            class="form-control"
+            formControlName="firstName"
+            name="firstName"
+            id="firstName"
+            required
+            maxlength="20"
+          />
+          <span *ngIf="!isEditFirstNameEnable">{{
+            profileForm.controls["firstName"].value
+          }}</span>
+          <div
+            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+            class="invalid"
+          >
+            <div *ngIf="firstName.errors.required">
+              {{ "profileInfo.firstNameRequiredError" | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 right">
+          <input
+            *ngIf="!isEditFirstNameEnable"
+            type="button"
+            (click)="onFirstNameEdit()"
+            class="btn btn-primary"
+            value="{{ 'profileInfo.edit' | translate }}"
+          />
+        </div>
+      </div>
+      <hr />
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <label>{{ "profileInfo.lname" | translate }}</label>
+        </div>
+        <div class="col-md-4">
+          <input
+            *ngIf="isEditLastNameEnable"
+            class="form-control"
+            formControlName="lastName"
+            name="lastName"
+            id="lastName"
+            required
+            maxlength="20"
+          />
+          <span *ngIf="!isEditLastNameEnable">{{
+            profileForm.controls["lastName"].value
+          }}</span>
+          <div
+            *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+            class="invalid"
+          >
+            <div *ngIf="lastName.errors.required">
+              {{ "profileInfo.lastNameRequiredError" | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 right">
+          <input
+            *ngIf="!isEditLastNameEnable"
+            type="button"
+            (click)="onLastNameEdit()"
+            class="btn btn-primary"
+            value="{{ 'profileInfo.edit' | translate }}"
+          />
+        </div>
+      </div>
+      <hr />
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <label>{{ "profileInfo.email" | translate }}</label
+          ><br />
+          <label>{{ "profileInfo.emailInfo" | translate }}</label>
+        </div>
+        <div class="col-md-4">
+          <input
+            *ngIf="isEditEmailEnable"
+            class="form-control"
+            formControlName="email"
+            name="email"
+            required
+            [pattern]="emailPattern"
+          />
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="invalid"
+          >
+            <div *ngIf="email.errors.required">
+              {{ "profileInfo.emailRequiredError" | translate }}
+            </div>
+            <div *ngIf="email.errors.minlength || email.errors.maxlength">
+              {{ "profileInfo.emailLengthError" | translate }}
+            </div>
+            <div *ngIf="email.errors.pattern">
+              {{ "profileInfo.emailFormatError" | translate }}
+            </div>
+          </div>
+          <span *ngIf="!isEditEmailEnable">{{
+            profileForm.controls["email"].value
+          }}</span>
+        </div>
+        <div class="col-md-4 right">
+          <input
+            *ngIf="!isEditEmailEnable"
+            type="button"
+            (click)="onEmailEdit()"
+            class="btn btn-primary"
+            value="{{ 'profileInfo.edit' | translate }}"
+          />
+        </div>
+      </div>
+      <hr />
+    </form>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <input
+          type="button"
+          (click)="home()"
+          class="btn btn-primary"
+          value="{{ 'profileInfo.return' | translate }}"
+        />
+      </div>
+      <div class="col-md-6 right">
+        <input
+          *ngIf="
+            isEditEmailEnable || isEditLastNameEnable || isEditFirstNameEnable
+          "
+          type="button"
+          (click)="validateForm()"
+          class="btn btn-primary"
+          value="{{ 'profileInfo.save' | translate }}"
+        />
+        <input
+          *ngIf="
+            isEditEmailEnable || isEditLastNameEnable || isEditFirstNameEnable
+          "
+          type="button"
+          (click)="onCancel()"
+          class="btn btn-secondary ml-3"
+          value="{{ 'profileInfo.cancel' | translate }}"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Confirmation Modal -->
+<div
+  class="modal fade"
+  id="confirmModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="confirmModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ "profileInfo.saveConfirm" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="onCancel()"
+          #closebutton
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="showProgress"
+          (click)="onSave()"
+        >
+          {{ "profileInfo.ok" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="onCancel()"
+        >
+          {{ "profileInfo.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

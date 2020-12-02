@@ -1,0 +1,311 @@
+<div class="row mt-5">
+  <div class="col-md-12 col-xs-6">
+    <div class="text-center" *ngIf="showProgress">
+      <span class="spinner-border" role="status" aria-hidden="true"></span>
+      <strong class="vertical-center"
+        >{{ "app.loading" | translate }}...</strong
+      >
+    </div>
+    <h6 class="invalid" *ngIf="mdError != ''">
+      {{ "errorsAPI." + mdError | translate }}
+    </h6>
+    <table
+      class="table table-striped mt-2"
+      *ngIf="results && results.length > 0"
+    >
+      <thead>
+        <tr>
+          <th scope="col">{{ "master.time" | translate }}</th>
+          <th scope="col">{{ "master.source" | translate }}</th>
+          <th scope="col">{{ "master.destinations" | translate }}</th>
+          <th scope="col">{{ "master.status" | translate }}</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of results">
+          <td>
+            {{
+              result.timestamp
+                | date: "dd MMM yyyy HH:mm:ss-SSS z":"UTC":currentLanguage
+            }}
+          </td>
+          <td>
+            {{ result.source }}
+          </td>
+          <td *ngIf="isArray(result.destinations)">
+            <div *ngFor="let destination of result.destinations">
+              <span *ngIf="destination.destination_name == 'No Route Found'">{{
+                "master." + destination.destination_name | translate
+              }}</span>
+              <span *ngIf="destination.destination_name != 'No Route Found'">{{
+                destination.destination_name
+              }}</span>
+            </div>
+          </td>
+          <td *ngIf="!isArray(result.destinations)">
+            {{ result.destination }}
+          </td>
+          <td>{{ "master.statuses." + result.status | translate }}</td>
+          <td>
+            <a
+              (click)="getData(result.id)"
+              data-toggle="modal"
+              data-target="#masterdataModalCenter"
+              ><i class="fa fa-info-circle fa-fw"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="masterdataModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="masterdataModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ "master.popuptitle" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="invalid" *ngIf="mdViewError != ''">
+          {{ "errorsAPI." + mdViewError | translate }}
+        </h6>
+        <div *ngIf="_datadetails">
+          <div class="row">
+            <div class="col-md-3">{{ "master.id" | translate }}</div>
+            <div class="col-md-9">
+              {{ _datadetails.id }}
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "master.source" | translate }}</div>
+            <div class="col-md-9">{{ _datadetails.source }}</div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "master.status" | translate }}</div>
+            <div class="col-md-9">
+              {{ "search.statuses." + _datadetails.status | translate }}
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "master.destinations" | translate }}</div>
+            <div class="col-md-9">
+              <div
+                *ngFor="
+                  let destination of _datadetails.destinations;
+                  let i = index
+                "
+                style="border: 1px solid #ccc; padding: 5px; font-size: 0.95em"
+              >
+                <div class="row">
+                  <div class="col-md-8">
+                    <b
+                      *ngIf="destination.destination_name == 'No Route Found'"
+                      >{{
+                        "master." + destination.destination_name | translate
+                      }}</b
+                    ><b
+                      *ngIf="destination.destination_name != 'No Route Found'"
+                      >{{ destination.destination_name }}</b
+                    ><br />
+                    {{ "master.status" | translate }}:
+                    {{ "search.statuses." + destination.status | translate
+                    }}<br />
+                    {{ "master.timestamp" | translate }}:
+                    {{
+                      destination.timestamp
+                        | date
+                          : "dd MMM yyyy HH:mm:ss-SSS z"
+                          : "UTC"
+                          : currentLanguage
+                    }}<br />
+                    {{ "master.response" | translate }}:
+                    {{ destination.blockchain_response }}<br />
+                  </div>
+                  <div
+                    class="col-md-4 align-center"
+                    *ngIf="destination.destination_name != 'No Route Found'"
+                  >
+                    <input
+                      type="button"
+                      (click)="
+                        view(destination.service_name, _datadetails.id, i)
+                      "
+                      data-toggle="collapse"
+                      [attr.data-target]="'#collapseExample-' + i"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                      class="btn btn-primary"
+                      value="{{ 'master.viewDetails' | translate }}"
+                    />
+                  </div>
+                </div>
+                <div class="collapse" [attr.id]="'collapseExample-' + i">
+                  <div class="card card-body">
+                    <div
+                      class="spinner-border text-dark ml-3"
+                      role="status"
+                      *ngIf="showProgress1 && index == i"
+                    >
+                      <span class="sr-only">Searching...</span>
+                    </div>
+                    <pre>{{ json_data_array[i] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-3">{{ "master.originalmsg" | translate }}</div>
+            <div class="col-md-9 note">
+              {{ "master.msg" | translate }}
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-12">
+              <ul class="nav nav-tabs" id="dataTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="xml-tab"
+                    data-toggle="tab"
+                    href="#xml"
+                    role="tab"
+                    aria-controls="xml"
+                    aria-selected="true"
+                  >
+                    {{ "master.xml" | translate }}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="json-tab"
+                    data-toggle="tab"
+                    href="#json"
+                    role="tab"
+                    aria-controls="json"
+                    aria-selected="false"
+                  >
+                    {{ "master.json" | translate }}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="json-explorer-tab"
+                    data-toggle="tab"
+                    href="#json-explorer"
+                    role="tab"
+                    aria-controls="json-explorer"
+                    aria-selected="false"
+                  >
+                    {{ "master.json-explorer" | translate }}
+                  </a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="xml"
+                  role="tabpanel"
+                  aria-labelledby="xml-tab"
+                >
+                  <pre>{{ _datadetails.xml_data }}</pre>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="json"
+                  role="tabpanel"
+                  aria-labelledby="json-tab"
+                >
+                  <pre>{{ prettyJSON }}</pre>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="json-explorer"
+                  role="tabpanel"
+                  aria-labelledby="json-explorer-tab"
+                >
+                  <div id="accordion" class="tree" *ngIf="_datadetails.id">
+                    <mat-tree
+                      [dataSource]="nestedDataSource"
+                      [treeControl]="nestedTreeControl"
+                      class="example-tree"
+                    >
+                      <mat-tree-node
+                        *matTreeNodeDef="let node"
+                        matTreeNodeToggle
+                      >
+                        <li class="mat-tree-node">
+                          <button mat-icon-button disabled></button>
+                          {{ node.filename }}: {{ node.type }}
+                        </li>
+                      </mat-tree-node>
+
+                      <mat-nested-tree-node
+                        *matTreeNodeDef="let node; when: hasNestedChild"
+                      >
+                        <li>
+                          <div class="mat-tree-node">
+                            <button
+                              mat-icon-button
+                              matTreeNodeToggle
+                              [attr.aria-label]="'toggle ' + node.filename"
+                            >
+                              <mat-icon class="mat-icon-rtl-mirror">
+                                {{
+                                  nestedTreeControl.isExpanded(node)
+                                    ? "expand_more"
+                                    : "chevron_right"
+                                }}
+                              </mat-icon>
+                            </button>
+                            {{ node.filename }}
+                          </div>
+                          <ul
+                            [class.example-tree-invisible]="
+                              !nestedTreeControl.isExpanded(node)
+                            "
+                          >
+                            <ng-container matTreeNodeOutlet></ng-container>
+                          </ul>
+                        </li>
+                      </mat-nested-tree-node>
+                    </mat-tree>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

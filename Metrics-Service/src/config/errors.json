@@ -1,0 +1,26 @@
+[
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Couldn't retrieve metrics details from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 1001,
+    "description": "Provide duration as either past week or past day or past hour to fetch events by period.",
+    "severity": "WARNING",
+    "alertable": true
+  },
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

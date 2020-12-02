@@ -1,0 +1,600 @@
+<div id="change-org-row" class="row">
+  <div id="change-org-column" class="col-md-12">
+    <h3>{{ "orgInfo.title" | translate }}</h3>
+    <hr />
+    <h6 class="invalid" *ngIf="OrgError != ''">
+      {{ "errorsAPI." + OrgError | translate }}
+    </h6>
+    <form id="change-org-form" class="form" [formGroup]="orgForm">
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <label>{{ "orgInfo.orgname" | translate }}</label>
+        </div>
+        <div class="col-md-4">
+          <input
+            *ngIf="isEditOrgEnable"
+            class="form-control"
+            formControlName="org"
+            name="org"
+            id="org"
+            required
+          />
+          <span *ngIf="!isEditOrgEnable">{{
+            orgForm.controls["org"].value
+          }}</span>
+          <div
+            *ngIf="org.invalid && (org.dirty || org.touched)"
+            class="invalid"
+          >
+            <div *ngIf="org.errors.required">
+              {{ "orgInfo.orgNameRequiredError" | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 right">
+          <input
+            *ngIf="!isEditOrgEnable"
+            type="button"
+            (click)="onOrgEdit()"
+            class="btn btn-primary"
+            value="{{ 'orgInfo.edit' | translate }}"
+          />
+          <input
+            *ngIf="isEditOrgEnable"
+            type="button"
+            (click)="validateForm()"
+            class="btn btn-primary"
+            value="{{ 'orgInfo.save' | translate }}"
+          />
+          <input
+            *ngIf="isEditOrgEnable"
+            type="button"
+            (click)="onCancel()"
+            class="btn btn-secondary ml-3"
+            value="{{ 'orgInfo.cancel' | translate }}"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row mt-1">
+  <div class="col-md-12 col-xs-6">
+    <h6 class="invalid" *ngIf="getUserError != ''">
+      {{ "errorsAPI." + getUserError | translate }}
+    </h6>
+    <table
+      class="table table-striped mt-2"
+      *ngIf="results && results.length > 0"
+    >
+      <thead>
+        <tr>
+          <th scope="col">{{ "orgInfo.user" | translate }}</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of results">
+          <td>
+            {{ result.username }}
+          </td>
+          <td>
+            <a
+              class="btn"
+              data-toggle="modal"
+              data-target="#EditModalCenter"
+              (click)="
+                edit = true;
+                add = false;
+                delete = false;
+                selected(result);
+                editUserError = ''
+              "
+              ><i class="fa fa-edit"></i
+            ></a>
+            <a
+              class="btn"
+              data-toggle="modal"
+              data-target="#confirmModalCenter"
+              (click)="
+                delete = true;
+                add = false;
+                edit = false;
+                selected(result);
+                deleteUserError = ''
+              "
+              ><i class="fa fa-trash"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-12 col-xs-6">
+    <a
+      class="btn btn-primary mt-3"
+      data-toggle="modal"
+      data-target="#AddModalCenter"
+      (click)="
+        add = true;
+        edit = false;
+        delete = false;
+        this.userAddForm.reset();
+        error = '';
+        addUserError = ''
+      "
+      >{{ "orgInfo.addNewUser" | translate }}</a
+    >
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div
+  class="modal fade"
+  id="AddModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="AddModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ "orgInfo.addUser" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="userAddForm.reset()"
+          aria-label="Close"
+          #closebutton1
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="invalid" *ngIf="addUserError != ''">
+          {{ "errorsAPI." + addUserError | translate }}
+        </h6>
+        <form
+          id="rules-form"
+          class="form"
+          [formGroup]="userAddForm"
+          autocomplete="new-password"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="user">{{ "orgInfo.user" | translate }}</label
+                ><br />
+                <input
+                  autocapitalize="none"
+                  type="text"
+                  name="user"
+                  id="user"
+                  formControlName="user"
+                  class="form-control"
+                  required
+                  autocomplete="new-pasword"
+                  [pattern]="emailPattern"
+                />
+                <div
+                  *ngIf="user.invalid && (user.dirty || user.touched)"
+                  class="invalid"
+                >
+                  <div *ngIf="user.errors.required">
+                    {{ "orgInfo.userRequiredError" | translate }}
+                  </div>
+                  <div *ngIf="user.errors.minlength || user.errors.maxlength">
+                    {{ "orgInfo.userLengthError" | translate }}
+                  </div>
+                  <div *ngIf="user.errors.pattern">
+                    {{ "orgInfo.usernameFormatError" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="password">{{
+                  "orgInfo.password" | translate
+                }}</label
+                ><br />
+                <input
+                  autocapitalize="none"
+                  type="password"
+                  name="password"
+                  id="password"
+                  formControlName="password"
+                  class="form-control"
+                  required
+                  autocomplete="new-password"
+                />
+                <div
+                  *ngIf="
+                    password.invalid && (password.dirty || password.touched)
+                  "
+                  class="invalid"
+                >
+                  <div *ngIf="password.errors.required">
+                    {{ "orgInfo.passwordRequiredError" | translate }}
+                  </div>
+                  <div
+                    *ngIf="
+                      password.errors.minlength || password.errors.maxlength
+                    "
+                  >
+                    {{ "orgInfo.passwordLengthError" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstname">{{
+                  "orgInfo.firstname" | translate
+                }}</label
+                ><br />
+                <input
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  formControlName="firstname"
+                  class="form-control"
+                  required
+                  maxlength="20"
+                />
+                <div
+                  *ngIf="
+                    firstname.invalid && (firstname.dirty || firstname.touched)
+                  "
+                  class="invalid"
+                >
+                  <div *ngIf="firstname.errors.required">
+                    {{ "orgInfo.firstNameRequiredError" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastname">{{
+                  "orgInfo.lastname" | translate
+                }}</label
+                ><br />
+                <input
+                  type="text"
+                  name="lastname"
+                  id="lastname"
+                  formControlName="lastname"
+                  class="form-control"
+                  required
+                  maxlength="20"
+                />
+                <div
+                  *ngIf="
+                    lastname.invalid && (lastname.dirty || lastname.touched)
+                  "
+                  class="invalid"
+                >
+                  <div *ngIf="lastname.errors.required">
+                    {{ "orgInfo.lastNameRequiredError" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-check-label">
+                  <input
+                    type="checkbox"
+                    id="role"
+                    value="role"
+                    formControlName="role"
+                  />
+                  {{ "orgInfo.orgadmin" | translate }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="userAddForm.reset()"
+            data-dismiss="modal"
+          >
+            {{ "orgInfo.cancel" | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="validateAddEdit()"
+          >
+            {{ "orgInfo.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div
+  class="modal fade"
+  id="EditModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="EditModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ "orgInfo.editUser" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="userEditForm.reset()"
+          #closebutton2
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="invalid" *ngIf="editUserError != ''">
+          {{ "errorsAPI." + editUserError | translate }}
+        </h6>
+        <form id="rules-form" class="form" [formGroup]="userEditForm">
+          <div *ngIf="editError" class="invalid">
+            {{ "orgInfo.editError" | translate }}
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="user">{{ "orgInfo.user" | translate }}</label
+                ><br />
+                <input
+                  autocapitalize="none"
+                  autocomplete="username"
+                  type="text"
+                  name="user"
+                  id="user"
+                  formControlName="user"
+                  class="form-control"
+                  required
+                  [pattern]="emailPattern"
+                />
+                <div
+                  *ngIf="
+                    userEdit.invalid && (userEdit.dirty || userEdit.touched)
+                  "
+                  class="invalid"
+                >
+                  <div *ngIf="userEdit.errors.pattern">
+                    {{ "orgInfo.usernameFormatError" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <br />
+                <label class="form-check-label">
+                  <input
+                    type="checkbox"
+                    id="role"
+                    value="role"
+                    formControlName="role"
+                  />
+                  {{ "orgInfo.orgadmin" | translate }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstname">{{
+                  "orgInfo.firstname" | translate
+                }}</label
+                ><br />
+                <input
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  formControlName="firstname"
+                  class="form-control"
+                  required
+                  maxlength="20"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastname">{{
+                  "orgInfo.lastname" | translate
+                }}</label
+                ><br />
+                <input
+                  type="text"
+                  name="lastname"
+                  id="lastname"
+                  formControlName="lastname"
+                  class="form-control"
+                  required
+                  maxlength="20"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="userEditForm.reset()"
+            data-dismiss="modal"
+          >
+            {{ "orgInfo.cancel" | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="validateAddEdit()"
+          >
+            {{ "orgInfo.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Confirmation Modal -->
+<div
+  class="modal fade"
+  id="confirmModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="confirmModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="edit && !selfChange" class="modal-title">
+          {{ "orgInfo.editConfirm" | translate }}
+        </h5>
+        <h5 *ngIf="edit && selfChange" class="modal-title">
+          {{ "orgInfo.editConfirmSelf" | translate }}
+        </h5>
+        <h5 *ngIf="add" class="modal-title">
+          {{ "orgInfo.addConfirm" | translate }}
+        </h5>
+        <h5 *ngIf="delete && !selfChange" class="modal-title">
+          <h6 class="invalid" *ngIf="deleteUserError != ''">
+            {{ "errorsAPI." + deleteUserError | translate }}
+          </h6>
+          {{ "orgInfo.deleteConfirm" | translate }}
+        </h5>
+        <h5 *ngIf="delete && selfChange" class="modal-title">
+          <h6 class="invalid" *ngIf="deleteUserError != ''">
+            {{ "errorsAPI." + deleteUserError | translate }}
+          </h6>
+          {{ "orgInfo.deleteConfirmSelf" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          #closebutton3
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button
+          *ngIf="edit"
+          type="button"
+          [disabled]="showProgress"
+          (click)="onEdit()"
+          class="btn btn-primary"
+        >
+          {{ "orgInfo.ok" | translate }}
+        </button>
+        <button
+          *ngIf="add"
+          type="button"
+          [disabled]="showProgress"
+          (click)="onAdd()"
+          class="btn btn-primary"
+        >
+          {{ "orgInfo.ok" | translate }}
+        </button>
+        <button
+          *ngIf="delete"
+          type="button"
+          [disabled]="showProgress"
+          (click)="onDelete()"
+          class="btn btn-primary"
+        >
+          {{ "orgInfo.ok" | translate }}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "orgInfo.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Confirmation Modal Org-->
+<div
+  class="modal fade"
+  id="confirmModalCenterOrg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="confirmModalCenterOrgTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ "orgInfo.saveConfirm" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="onCancel()"
+          #closebutton4
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="onOrgSave()">
+          {{ "profileInfo.ok" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="onCancel()"
+        >
+          {{ "profileInfo.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

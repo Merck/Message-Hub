@@ -1,0 +1,38 @@
+#login-row #login-column #login-box {
+  margin-top: auto;
+  max-width: 500px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 10px 10px 50px rgba(0,0,0,0.4);
+  position:relative;
+}
+
+#login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+
+#login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+#login-form label{
+	color: #333333;
+}
+
+#login-form h3{
+	color: #333333;
+	margin-bottom:20px;
+}
+
+#login-form a{
+	color: #000;
+}
+
+.invalid-feedback {
+    color: #990000 !important
+}
+
+.login-error{
+	padding: 0 20px 20px;
+	color: #990000
+}

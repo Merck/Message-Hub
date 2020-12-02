@@ -1,0 +1,441 @@
+<h3>{{ "hubAlerts.title" | translate }}</h3>
+<div class="card">
+  <div class="card-body">
+    <h6 class="invalid" *ngIf="alertError != ''">
+      {{ "errorsAPI." + alertsError | translate }}
+    </h6>
+    <h6 *ngIf="!(alerts?.results?.length > 0)">
+      {{ "privacy.nodata" | translate }}
+    </h6>
+    <table
+      class="table table-responsive"
+      *ngIf="alerts?.results && alerts?.results?.length > 0"
+    >
+      <thead>
+        <tr>
+          <th scope="col" width="30%">{{ "hubAlerts.time" | translate }}</th>
+          <th scope="col" width="25%">
+            {{ "hubAlerts.severity" | translate }}
+          </th>
+          <th scope="col" width="35%">{{ "hubAlerts.message" | translate }}</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alert of alerts?.results">
+          <td>
+            {{
+              alert.timestamp
+                | date: "dd MMM yyyy HH:mm:ss-SSS z":"UTC":currentLanguage
+            }}
+          </td>
+          <td class="uppercase">
+            <span *ngIf="alert.severity === 'ERROR'"
+              ><i class="fa fa-bomb fa-fw error"></i>
+              {{ "hubAlerts." + alert.severity | translate }}</span
+            >
+            <span *ngIf="alert.severity === 'WARNING'"
+              ><i class="fa fa-exclamation-triangle fa-fw warning"></i>
+              {{ "hubAlerts." + alert.severity | translate }}</span
+            >
+          </td>
+          <td>
+            {{
+              ("errors." + alert.error_code | translate) !==
+              "errors." + alert.error_code
+                ? ("errors." + alert.error_code | translate)
+                : alert.error_description
+            }}
+          </td>
+          <td>
+            <a
+              class="btn"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+              (click)="getAlert(alert.id)"
+              ><i class="fa fa-info-circle fa-fw"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="row align-middle no-gutters"
+      style="line-height: 32px"
+      *ngIf="alerts && alerts.totalResults > 0"
+    >
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+        <div
+          class="dataTables_info"
+          id="dtBasicExample_info"
+          role="status"
+          aria-live="polite"
+        >
+          <p class="font-13 line-height">
+            {{ "search.showing" | translate }}
+            {{ (alerts.currentPage - 1) * alerts.resultsPerPage + 1 }}
+            {{ "search.to" | translate }}
+            {{
+              alerts.totalResults > alerts.currentPage * alerts.resultsPerPage
+                ? alerts.currentPage * alerts.resultsPerPage
+                : alerts.totalResults
+            }}
+            {{ "search.of" | translate }}
+            {{ alerts.totalResults }}
+            {{ "search.showentries" | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="col-sm-12 col-md-6 col-lg-6 col-xl-9"
+        *ngIf="alerts && alerts.totalPages > 1"
+      >
+        <div
+          class="dataTables_paginate paging_simple_numbers float-right"
+          id="dtBasicExample_paginate"
+        >
+          <ul class="pagination font-13">
+            <li
+              id="dtBasicExample_previous"
+              [ngClass]="{
+                'paginate_button page-item previous': true,
+                disabled: alerts.currentPage < 2
+              }"
+            >
+              <a
+                (click)="changePage(alerts.currentPage - 1)"
+                aria-controls="dtBasicExample"
+                data-dt-idx="0"
+                tabindex="0"
+                class="page-link"
+                >{{ "search.previous" | translate }}</a
+              >
+            </li>
+            <li
+              *ngIf="!(alerts.currentPage == 1 || alerts.currentPage == 2)"
+              [ngClass]="{
+                'paginate_button page-item': true
+              }"
+            >
+              <a
+                (click)="changePage(1)"
+                aria-controls="dtBasicExample"
+                data-dt-idx="1"
+                tabindex="0"
+                class="page-link"
+                >{{ 1 }}</a
+              >
+            </li>
+            <li
+              *ngIf="
+                !(
+                  alerts.currentPage == 1 ||
+                  alerts.currentPage == 2 ||
+                  alerts.currentPage == 3
+                )
+              "
+              [ngClass]="{
+                'paginate_button page-item previous': true,
+                disabled: true
+              }"
+            >
+              <a
+                aria-controls="dtBasicExample"
+                data-dt-idx="1"
+                tabindex="0"
+                class="page-link"
+                >...</a
+              >
+            </li>
+            <li
+              *ngFor="
+                let item of [].constructor(alerts.totalPages);
+                let i = index
+              "
+              [ngClass]="{
+                'paginate_button page-item': true,
+                active: i + 1 === alerts.currentPage
+              }"
+            >
+              <a
+                *ngIf="
+                  alerts.currentPage == i + 1 ||
+                  alerts.currentPage == i ||
+                  alerts.currentPage == i + 2
+                "
+                (click)="changePage(i + 1)"
+                aria-controls="dtBasicExample"
+                data-dt-idx="1"
+                tabindex="0"
+                class="page-link"
+                >{{ i + 1 }}</a
+              >
+            </li>
+            <li
+              *ngIf="
+                !(
+                  alerts.currentPage == alerts.totalPages - 2 ||
+                  alerts.currentPage == alerts.totalPages - 1 ||
+                  alerts.currentPage == alerts.totalPages
+                )
+              "
+              [ngClass]="{
+                'paginate_button page-item previous': true,
+                disabled: true
+              }"
+            >
+              <a
+                aria-controls="dtBasicExample"
+                data-dt-idx="1"
+                tabindex="0"
+                class="page-link"
+                >...</a
+              >
+            </li>
+            <li
+              *ngIf="
+                !(
+                  alerts.currentPage == alerts.totalPages - 1 ||
+                  alerts.currentPage == alerts.totalPages
+                )
+              "
+              [ngClass]="{
+                'paginate_button page-item': true
+              }"
+            >
+              <a
+                (click)="changePage(alerts.totalPages)"
+                aria-controls="dtBasicExample"
+                data-dt-idx="1"
+                tabindex="0"
+                class="page-link"
+                >{{ alerts.totalPages }}</a
+              >
+            </li>
+            <li
+              id="dtBasicExample_next"
+              [ngClass]="{
+                'paginate_button page-item next': true,
+                disabled: alerts.currentPage == alerts.totalPages
+              }"
+            >
+              <a
+                (click)="changePage(alerts.currentPage + 1)"
+                aria-controls="dtBasicExample"
+                data-dt-idx="7"
+                tabindex="0"
+                class="page-link"
+                >{{ "search.next" | translate }}</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a
+      *ngIf="isOrgAdmin && alerts?.results && alerts?.results?.length > 0"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#clearAllAlertsModal"
+      >{{ "hubAlerts.clearAll" | translate }}</a
+    >
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ "hubAlerts.alertDetails" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          #closebutton1
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="invalid" *ngIf="alertError != ''">
+          {{ "errorsAPI." + alertError | translate }}
+        </h6>
+        <div *ngIf="alertDetails">
+          <div class="row">
+            <div class="col-md-4">{{ "hubAlerts.alertTime" | translate }}</div>
+            <div class="col-md-8">
+              {{
+                alertDetails?.timestamp
+                  | date: "dd MMM yyyy HH:mm:ss-SSS z":"UTC":currentLanguage
+              }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              {{ "hubAlerts.alertSource" | translate }}
+            </div>
+            <div class="col-md-8">{{ alertDetails?.source }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              {{ "hubAlerts.alertSeverity" | translate }}
+            </div>
+            <div class="col-md-8">
+              {{ "hubAlerts." + alertDetails?.severity | translate }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              {{ "hubAlerts.alertMessage" | translate }}
+            </div>
+            <div class="col-md-8">
+              {{
+                ("errors." + alertDetails?.error_code | translate) !==
+                "errors." + alertDetails?.error_code
+                  ? ("errors." + alertDetails?.error_code | translate)
+                  : alertDetails?.error_description
+              }}
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <pre style="white-space: pre-wrap">
+				{{ alertDetails?.error_stacktrace }}
+        		</pre
+              >
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ "hubAlerts.close" | translate }}
+          </button>
+          <button
+            *ngIf="isOrgAdmin"
+            type="button"
+            class="btn btn-danger"
+            data-toggle="modal"
+            data-target="#clearAlertConfModal"
+          >
+            {{ "hubAlerts.clearAlert" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation Modals -->
+<div
+  class="modal fade"
+  id="clearAlertConfModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="clearAlertConfModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ "clearAlertsDialog.titleconf" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          #closebutton2
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="clearAlert(alertDetails.id)"
+          [disabled]="showProgress"
+        >
+          {{ "clearAlertsDialog.proceed" | translate }}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "clearAlertsDialog.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Clear All Modals -->
+<div
+  class="modal fade"
+  id="clearAllAlertsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="clearAllAlertsModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <h6 class="invalid" *ngIf="clearAlertsError != ''">
+            {{ "errorsAPI." + clearAlertsError | translate }}
+          </h6>
+          {{ "clearAlertsDialog.title" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          #closebutton3
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-footer">
+        <div
+          class="spinner-border text-dark ml-3"
+          role="status"
+          *ngIf="showProgress"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="clearAll()"
+          [disabled]="showProgress"
+        >
+          {{ "clearAlertsDialog.proceed" | translate }}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "clearAlertsDialog.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

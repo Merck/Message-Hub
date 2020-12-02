@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-charts.fullname" . }}
+  labels:
+    {{- include "helm-charts.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-charts.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "helm-charts.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm-charts.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /admin/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /admin/health
+              port: http
+          env:
+            - name: OAUTH_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: oauth.server
+            - name: USERINFO_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: usermanagement.user.info.endpoint
+            - name: APIKEY
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: oauth.apikey
+            - name: MANAGEMENT_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: usermanagement.server
+            - name: IAM_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: iam.server
+            - name: IAM_TOKEN_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: iam.token.endpoint
+            - name: ORGANIZATION_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.organization.service
+            - name: EVENT_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.event.service
+            - name: SEARCH_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.search.service
+            - name: ROUTING_RULES_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.routing.rules.service
+            - name: DATA_PRIVACY_RULES_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.data.privacy.rules.service
+            - name: MASTERDATA_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.masterdata.service
+            - name: METRICS_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.metrics.service
+            - name: ALERT_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.alert.service
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

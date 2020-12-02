@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ "metrics.destination" | translate }}</h5>
+    <h6 class="invalid" *ngIf="destinationError != ''">
+      {{ "errorsAPI." + destinationError | translate }}
+    </h6>
+    <div>
+      <div style="display: block">
+        <canvas id="canvasDest">{{ chartDest }} </canvas>
+      </div>
+      <div class="center">
+        <a
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#ViewDestModalCenter"
+          >{{ "metrics.viewDetails" | translate }}</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div
+  class="modal fade"
+  id="ViewDestModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="ViewDestModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ "metrics.viewDestination" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display: block">
+          <canvas id="canvasDestView">{{ chartDestView }} </canvas>
+        </div>
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th scope="col">{{ "metrics.dest" | translate }}</th>
+              <th scope="col">{{ "metrics.destnumber" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of results">
+              <td>
+                <span *ngIf="result.destination_name == 'No Route Found'">{{
+                  "metrics.destinations." + result.destination_name | translate
+                }}</span>
+                <span *ngIf="result.destination_name != 'No Route Found'">{{
+                  result.destination_name
+                }}</span>
+              </td>
+              <td>
+                {{ result.count }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "metrics.close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

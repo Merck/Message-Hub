@@ -1,0 +1,34 @@
+{
+  "model": "messaging-hub",
+  "type": "event",
+  "eventModel": {
+    "organization": {
+      "type": "keyword"
+    },
+    "id": {
+      "type": "keyword"
+    },
+    "textids": {
+      "type": "text"
+    },
+    "timestamp": {
+      "type": "date"
+    },
+    "type": {
+      "type": "keyword"
+    },
+    "action": {
+      "type": "keyword"
+    },
+    "source": {
+      "type": "keyword"
+    },
+    "destinations": {
+      "type": "text"
+    },
+    "status": {
+      "type": "keyword"
+    }
+  }
+}
+  

@@ -1,0 +1,42 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+button {
+  background: white !important;
+  border: none !important;
+}
+button:focus {
+  outline: none !important;
+}
+.mat-tree-node {
+  min-height: 0px !important;
+}
+
+.nav-link {
+  color: #333 !important;
+}
+.tab-content {
+  border: solid 1px #dee2e6;
+  border-top: none;
+  padding: 10px;
+}
+.mat-tree-node {
+  font-family: "Open Sans", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+  color: #495057;
+}
+.mat-icon {
+  color: #555555;
+}
+.align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

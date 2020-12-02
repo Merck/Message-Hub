@@ -1,0 +1,316 @@
+/* You can add global styles to this file, and also import other style files */
+.merck-teal {
+  color: #00877c !important;
+}
+.merck-light-teal {
+  color: #6eceb2 !important;
+}
+.merck-lighter-teal {
+  color: #4dede6 !important;
+}
+.merck-dark-gray {
+  color: #37424a !important;
+}
+.merck-light-gray {
+  color: #bcbdbc !important;
+}
+.merck-gray-lead {
+  color: #d3d3d3 !important;
+}
+.merck-green {
+  color: #879637 !important;
+}
+.merck-orange {
+  color: #f68d2e !important;
+}
+.merck-yellow {
+  color: #fbe122 !important;
+}
+.merck-purple {
+  color: #662046 !important;
+}
+.merck-white {
+  color: #fff !important;
+}
+.merck-black {
+  color: #000 !important;
+}
+.merck-teal-bg {
+  background: #00877c !important;
+}
+.merck-light-teal-bg {
+  background: #6eceb2 !important;
+}
+.merck-lighter-teal-bg {
+  background: #dadfe5 !important;
+}
+.merck-dark-gray-bg {
+  background: #37424a !important;
+}
+.merck-warm-gray-bg-color {
+  background: #bfb8af !important;
+}
+.merck-light-gray-bg {
+  background: #f2f1ef !important;
+}
+.merck-green-bg {
+  background: #879637 !important;
+}
+.merck-orange-bg {
+  background: #f68d2e !important;
+}
+.merck-green-bg {
+  background: #879637 !important;
+}
+.merck-yellow-bg {
+  background: #fbe122 !important;
+}
+.merck-purple-bg {
+  background: #662046 !important;
+}
+.merck-white-bg {
+  background: #fff !important;
+}
+.merck-dark-blue-bg {
+  background: #1b2733 !important;
+}
+.merck-blue-bg {
+  background: #243644 !important;
+}
+
+.info {
+  color: #2e2ef6;
+}
+.warning {
+  color: #f68d2e;
+}
+.error {
+  color: #f62e2e;
+}
+.ok {
+  color: #008700;
+}
+.invalid {
+  color: #990000 !important;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+
+html,
+body {
+  height: 100%;
+}
+#outer {
+  min-height: 100%;
+}
+#wrapper {
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+  color: #495057;
+}
+h3 {
+  color: #bfb8af;
+  font-size: 1.25rem;
+}
+h5 {
+  color: #bfb8af;
+  font-size: 1.15rem;
+}
+pre {
+  font-size: 0.75rem;
+  tab-size: 2;
+  font-family: "Nanum Gothic Coding", monospace;
+}
+a {
+  cursor: pointer;
+}
+
+.navbar-brand {
+  color: white !important;
+}
+.navbar-nav {
+  color: white !important;
+}
+.nav-link {
+  color: white !important;
+}
+.dropdown.no-arrow .dropdown-toggle::after {
+  display: none;
+}
+
+.toolbar-search {
+  margin-left: 30px;
+  color: white !important;
+  width: 300px;
+}
+
+.toolbar-search i {
+  opacity: 0.5;
+}
+
+.badge-counter {
+  position: absolute;
+  transform: scale(0.85);
+  transform-origin: top right;
+  right: 0.25rem;
+  margin-top: -0.25rem;
+}
+
+.dropdown-menu {
+  font-size: 0.8em;
+}
+
+.table-sm {
+  font-size: 0.8em;
+}
+
+.search-field {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  box-shadow: none;
+  color: #fff;
+  min-width: 200px !important;
+}
+
+.search-field::placeholder {
+  color: white !important;
+  opacity: 0.5;
+}
+
+.btn-primary,
+.page-item.active .page-link {
+  background: #00877c !important;
+  color: #ffffff !important;
+}
+
+.page-item a {
+  color: #00877c;
+}
+
+.right {
+  text-align: right;
+}
+
+.list-group-item.active {
+  font-weight: 700;
+  color: #495057;
+  border-color: #6eceb2;
+}
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+.scroll {
+  height: calc(100% - 60px);
+  overflow: scroll;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+.tree-node {
+  padding-left: 15px;
+}
+
+.tree-link {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.tree-node .key {
+}
+
+.tree-node .value {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.mat-button,
+.mat-fab,
+.mat-flat-button,
+.mat-icon-button,
+.mat-mini-fab,
+.mat-raised-button,
+.mat-stroked-button,
+.mat-form-field-label-wrapper,
+.mat-input-element,
+.mat-calendar {
+  font-family: "Open Sans", "Arial Narrow", Arial, sans-serif;
+}
+.mat-form-field-wrapper {
+  padding-bottom: 0em;
+}
+.link {
+  color: #00877c !important;
+}
+.note {
+  font-size: 0.8em;
+  color: #00877c;
+}
+.center {
+  text-align: center;
+}
+.font-13 {
+  font-size: 13px;
+}
+.font-15 {
+  font-size: 15px;
+}
+.vertical-center {
+  vertical-align: super;
+}
+.vertical-middle {
+  vertical-align: middle;
+}
+.line-height {
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}

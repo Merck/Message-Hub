@@ -1,0 +1,277 @@
+/*
+ * Copyright 2020 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co.,
+ * Inc., Kenilworth, NJ, USA.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * EPCIS MESSAGING HUB - DIGITAL FINGERPRINT BLOCKCHAIN ADAPTER
+
+ */
+
+import express from "express";
+import axios from "axios";
+import {PostgresService} from "../services/postgres-service"
+import {ErrorService} from "../services/error-service";
+import {ServiceError} from "../errors/service-error";
+import {CommonUtils} from "../utils/common-utils";
+
+let commonUtils = new CommonUtils();
+let jp = require('jsonpath');
+
+export class AdapterController {
+
+    public router = express.Router();
+    private _postgresService: PostgresService = new PostgresService();
+    private _destination = "Digital Fingerprinting";
+
+    constructor() {
+        this.router.post("/adapter/event", this.postEvent);
+        this.router.get("/adapter/organization/:orgId/event/:eventId", this.getEvent);
+
+        this.router.post("/adapter/masterdata", this.postMasterdata);
+        this.router.get("/adapter/organization/:orgId/masterdata/:masterdataId", this.getMasterdata);
+    }
+
+    /**
+     * Retrieves the event from the blockchain
+     * @param req
+     * @param res
+     */
+    getEvent = async (req: express.Request, res: express.Response): Promise<void> => {
+        let eventId = req.params.eventId;
+        res.status(200).send({"success": true, "message": "TODO - need to query based on gtin + serialnum + lot num + expiry" });
+    }
+
+    /**
+     * Handles the incoming message, adapting it for the specific blockchain
+     *
+     * @param req
+     * @param res
+     */
+    postEvent = async (req: express.Request, res: express.Response): Promise<boolean> => {
+        let eventId;
+        let organizationId;
+        let status;
+
+        try {
+            if (!req.body) {
+                throw new Error("Missing request body");
+            }
+
+            organizationId = req.body.organizationid;
+            if (!organizationId) {
+                throw new Error("Missing organization id");
+            }
+
+            eventId = req.body.eventid;
+            if (!eventId) {
+                throw new Error("Missing event id");
+            }
+
+            let json = req.body.json;
+            if (!json) {
+                throw new Error("Missing event data");
+            }
+
+            //DETERMINE WHAT TO DO WITH THE DATA
+            let message = this.formatMessage(json);
+
+            //INSERT BLOCKCHAIN SPECIFIC CODE HERE
+            let bcResponse = await this.writeMessageToBlockchain(organizationId, message);
+
+            //UPDATE THE STATUS IN POSTGRES
+            status = "on_ledger";
+            await this._postgresService.updateEventDestination(eventId, status, bcResponse);
+            await this._postgresService.updateEventStatus(eventId, status);
+
+            //UPDATE THE STATUS IN ELASTICSEARCH
+            const body = {
+                destination: this._destination,
+                status: status
+            };
+            await axios.patch(process.env.SEARCH_SERVICE + "/search/organizations/" + organizationId + "/events/" + eventId, body);
+
+            res.status(200).send({"success": true, "message": "Processed " + status});
+        } catch (e) {
+            if (e instanceof ServiceError) {
+                ErrorService.reportError(organizationId, null, e.errorCode, e.stack, [eventId, e.message]);
+            } else {
+                ErrorService.reportError(organizationId, null, 3000, e.stack, [eventId, e.message]);
+            }
+
+            status = "failed";
+            if (eventId) {
+                await this._postgresService.updateEventDestination(eventId, status, '');
+                await this._postgresService.updateEventStatus(eventId, status);
+                if (organizationId) {
+                    //UPDATE THE STATUS IN ELASTICSEARCH
+                    const body = {
+                        destination: this._destination,
+                        status: status
+                    };
+                    await axios.patch(process.env.SEARCH_SERVICE + "/search/organizations/" + organizationId + "/events/" + eventId, body);
+                }
+            }
+            res.status(400).send({"success": false, "message": "Rejected. Reason: " + e.message});
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Formats the incoming JSON into the message structure expected by the blockchain
+     *
+     * @param json
+     */
+    private formatMessage(json: any) {
+
+        //this BC only accepts commissioning events so reject anything that is not OBJECT/ADD
+        let eventType = jp.nodes(json, '$..EventList.ObjectEvent');
+        if (eventType === undefined || eventType.length !== 1) {
+            throw new ServiceError("This adapter only accepts Object events", 1000);
+        }
+        let eventAction = jp.value(json, '$..EventList.ObjectEvent.action');
+        if (eventAction === undefined || "ADD" !== eventAction.toUpperCase()) {
+            throw new ServiceError("This adapter only accepts commissioning (Object ADD) events", 1000);
+        }
+
+        //this BC uses gtin/serialNumber/lotNumber/expiryData as keys so they must be in the data
+        let gtin = jp.value(json, '$..epcExtensions.item.field[?(@.name=="gtin")].value');
+        if (gtin === undefined) {
+            throw new ServiceError("gtin value not found", 1000);
+        }
+        let serialNumber = jp.value(json, '$..epcExtensions.item.field[?(@.name=="barcode")].value');
+        if (serialNumber === undefined) {
+            throw new ServiceError("serialNumber value not found", 1000);
+        }
+
+        let lotNumber = jp.value(json, '$..extension.ilmd.lotNumber');
+        if (lotNumber === undefined) {
+            throw new ServiceError("lotNumber value not found", 1000);
+        }
+
+        let expiryDate = jp.value(json, '$..extension.ilmd.expiryDate');
+        if (expiryDate === undefined) {
+            throw new ServiceError("expiryDate value not found", 1000);
+        }
+
+        //this is optional in the data
+        let VUId = jp.value(json, '$..epcExtensions.item.field[?(@.name=="VUId")].value');
+
+        let message = {
+            gtin: gtin,
+            serialNumber: serialNumber,
+            lotNumber: lotNumber,
+            expiryDate: expiryDate,
+            VUId: VUId,
+            message: json
+        };
+
+        return message;
+    }
+
+    /**
+     * Writes a message to the Blockchain
+     *
+     * @param organizationId
+     * @param message
+     */
+    private writeMessageToBlockchain = async (organizationId:number, message: any): Promise<any> => {
+        let token;
+
+        await this.authenticateWithBlockchain(organizationId).then(result => {
+            token = result;
+        }).catch(error => {
+            throw error;
+        });
+
+        const options = {
+            headers: {
+                'Authorization': "Bearer " + token
+            }
+        };
+
+        let bcResponse: any;
+        await axios.post(process.env.DFP_BLOCKCHAIN_API + "/api/products", message, options).then(result => {
+            bcResponse = result.data;
+        }).catch(error => {
+            console.log( JSON.stringify(error.response.data) );
+
+            if( 401 === error.response.status){
+                throw new ServiceError(error.response.data.message, 3001);
+            }
+            throw new ServiceError(error.response.data.message, 3000);
+        });
+        return bcResponse.message;
+    }
+
+    /**
+     * Gets an OAuth token for accessing the API, using the BC API's authentication method
+     */
+    private authenticateWithBlockchain = async (orgId:number): Promise<any> => {
+
+        let token;
+
+        //TODO get this from the organization service not directly from the database
+        let results = await this._postgresService.getCredentials(orgId, 'dfp-bc-adapter');
+
+        if( results === undefined || results.rowCount !== 1){
+            throw new ServiceError("Couldn't find BC credentials in database", 2000)
+        }
+        let encryptedData = {
+            iv:  results.rows[0].password_iv,
+            encryptedData: results.rows[0].password
+        }
+
+        let password;
+        try{
+            password = commonUtils.decrypt(encryptedData);
+        }catch(error){
+            throw new ServiceError(error, 2001);
+        }
+
+        let auth = {
+            "email":  results.rows[0].username,
+            "password": password
+        }
+
+        await axios.post(process.env.DFP_BLOCKCHAIN_API + "/api/user/login", auth).then(result => {
+            token = result.data.token;
+        }).catch(error => {
+            throw new ServiceError(error, 3001);
+        });
+
+        return token;
+    }
+
+    /**
+     * Gets masterdata from the blockchain (not used in this implementation)
+     * @param req
+     * @param res
+     */
+    getMasterdata = async (req: express.Request, res: express.Response): Promise<void> => {
+        res.status(400).send({"success": false, "message": "Masterdata is not accepted by this adapter"});
+    }
+
+    /**
+     * Posts masterdata to the blockchain (not used in this implementation)
+     * @param req
+     * @param res
+     */
+    postMasterdata = async (req: express.Request, res: express.Response): Promise<void> => {
+        res.status(400).send({"success": false, "message": "Masterdata is not accepted by this adapter"});
+    }
+}

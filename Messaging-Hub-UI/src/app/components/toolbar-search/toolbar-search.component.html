@@ -1,0 +1,7 @@
+<form class="form-inline toolbar-search" [formGroup]="toolbarSearchForm" (ngSubmit)="search()">
+	<i class="fa fa-search" aria-hidden="true"></i>
+	<input class="search-field ml-3 w-75" type="text" placeholder="{{'toolbar.search.placeholder' | translate }}" aria-label="Search"
+		   formControlName="toolbarquerytext"
+		   name="toolbarquerytext"
+		   id="toolbarquerytext">
+</form>

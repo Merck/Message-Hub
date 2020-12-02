@@ -1,0 +1,96 @@
+<h3>{{ "processingQueue.title" | translate }}</h3>
+<div class="card">
+  <div class="card-body">
+    <div class="card-columns">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="invalid" *ngIf="EventError != ''">
+            {{ "errorsAPI." + EventError | translate }}
+          </h6>
+          <h5 class="card-title">
+            {{ "processingQueue.events" | translate }}
+            <span class="warning font-15" *ngIf="eventPaused">
+              <i class="fa fa-exclamation-triangle fa-fw warning"></i
+              >{{ "processingQueue.pausewarn" | translate }}
+            </span>
+          </h5>
+          <p class="card-text" *ngIf="numberEvent > 0">
+            {{
+              "processingQueue.messagesQueued"
+                | translate: {number: numberEvent}
+            }}
+          </p>
+          <p class="card-text" *ngIf="numberEvent === 0">
+            {{ "processingQueue.emptyQueue" | translate }}
+          </p>
+          <button
+            class="btn btn-primary"
+            *ngIf="!eventPaused"
+            (click)="pauseEvent()"
+          >
+            {{ "processingQueue.pause" | translate }}
+          </button>
+          <button
+            class="btn btn-primary"
+            *ngIf="eventPaused"
+            (click)="resumeEvent()"
+          >
+            {{ "processingQueue.resume" | translate }}
+          </button>
+          <div
+            class="spinner-border text-dark ml-3 vertical-middle"
+            role="status"
+            *ngIf="showProgressEvent"
+          >
+            <span class="sr-only">Searching...</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h6 class="invalid" *ngIf="MasterDataError != ''">
+            {{ "errorsAPI." + MasterDataError | translate }}
+          </h6>
+          <h5 class="card-title">
+            {{ "processingQueue.masterdata" | translate }}
+            <span class="warning font-15" *ngIf="masterDataPaused">
+              <i class="fa fa-exclamation-triangle fa-fw warning"></i
+              >{{ "processingQueue.pausewarn" | translate }}
+            </span>
+          </h5>
+          <p class="card-text" *ngIf="numberMasterData > 0">
+            {{
+              "processingQueue.messagesQueued"
+                | translate: {number: numberMasterData}
+            }}
+          </p>
+          <p class="card-text" *ngIf="numberMasterData === 0">
+            {{ "processingQueue.emptyQueue" | translate }}
+          </p>
+          <button
+            class="btn btn-primary"
+            *ngIf="!masterDataPaused"
+            (click)="pauseMasterData()"
+          >
+            {{ "processingQueue.pause" | translate }}
+          </button>
+
+          <button
+            class="btn btn-primary"
+            *ngIf="masterDataPaused"
+            (click)="resumeMasterData()"
+          >
+            {{ "processingQueue.resume" | translate }}
+          </button>
+          <div
+            class="spinner-border text-dark ml-3 vertical-middle"
+            role="status"
+            *ngIf="showProgressMasterData"
+          >
+            <span class="sr-only">Searching...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

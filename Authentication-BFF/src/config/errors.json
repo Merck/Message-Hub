@@ -1,0 +1,77 @@
+[
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Couldn't obtain a set of tokens. OAuth server returned error: %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4002,
+    "description": "Couldn't revoke access tokens. OAuth server returned error: %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4003,
+    "description": "Couldn't initiate Forgot Password workflow. OAuth server returned error: %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4004,
+    "description": "Couldn't initiate Confirm Password Reset workflow. OAuth server returned error: %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4005,
+    "description": "Couldn't initiate Change Password workflow. OAuth server returned error: %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+
+  {
+    "code": 9000,
+    "description": "Unknown error while trying to obtain a set of tokens. %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error while trying to revoke access tokens. %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error while trying to initiate Forgot Password workflow. %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9003,
+    "description": "Unknown error while trying to initiate Confirm Password Reset workflow. %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 9004,
+    "description": "Unknown error while trying to initiate Change Password workflow. %s.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+
+
+  {
+    "code": 9900,
+    "description": "UNIT TEST ERROR",
+    "severity": "WARNING",
+    "alertable": true
+  }
+]

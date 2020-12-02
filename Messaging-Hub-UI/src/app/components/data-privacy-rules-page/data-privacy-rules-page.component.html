@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ "privacy.title" | translate }}</h3>
+      </div>
+      <div class="col-md-6">
+        <a
+          class="link float-right"
+          data-toggle="modal"
+          data-target="#auditTrailModalCenter"
+          (click)="viewAt()"
+          *ngIf="isOrgAdmin"
+          ><u>{{ "privacy.viewAT" | translate }}</u></a
+        >
+      </div>
+    </div>
+    <data-privacy-rules-viewer></data-privacy-rules-viewer>
+  </div>
+</div>
+
+<!-- Audit Trail Modal -->
+<div
+  class="modal fade"
+  id="auditTrailModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="auditTrailModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ "privacy.auditTrail" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center" *ngIf="showProgress">
+          <span class="spinner-border" role="status" aria-hidden="true"></span>
+          <strong class="vertical-center"
+            >{{ "app.loading" | translate }}...</strong
+          >
+        </div>
+        <h6 class="invalid" *ngIf="viewError != ''">
+          {{ "errorsAPI." + viewError | translate }}
+        </h6>
+        <table class="table" *ngIf="results && results.length > 0">
+          <thead>
+            <tr>
+              <th scope="col">{{ "privacy.time" | translate }}</th>
+              <th scope="col">{{ "privacy.user" | translate }}</th>
+              <th scope="col">{{ "privacy.event" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of results">
+              <td>
+                {{
+                  result.timestamp
+                    | date: "dd MMM yyyy HH:mm:ss-SSS z":"UTC":currentLanguage
+                }}
+              </td>
+              <td>{{ result.editor }}</td>
+              <td>
+                {{ "privacy.change." + result.change_description | translate }}
+                {{ "privacy.types." + result.datafield_type | translate }}:
+                {{ result.new_datafield_display }}.
+                {{ "privacy.privacySettings" | translate }}-
+                {{ "privacy." + privacySetting(result.can_store) | translate }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

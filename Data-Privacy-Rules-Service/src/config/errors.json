@@ -1,0 +1,98 @@
+[
+  {
+    "code": 4000,
+    "description": "Couldn't post new alert to alert-service.",
+    "severity": "ERROR",
+    "alertable": false
+  },
+  {
+    "code": 4001,
+    "description": "Couldn't retrieve data privacy rules from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4002,
+    "description": "Couldn't retrieve data privacy rules audit history from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4003,
+    "description": "Couldn't create the data privacy rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4004,
+    "description": "Couldn't update the data privacy rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4005,
+    "description": "Couldn't update the ordering of data privacy rules in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4006,
+    "description": "Couldn't delete the data privacy rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4007,
+    "description": "Couldn't retrieve the list of configured data fields from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 4008,
+    "description": "Couldn't retrieve data privacy rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9000,
+    "description": "Unknown error while retrieving data privacy rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9001,
+    "description": "Unknown error while retrieving data privacy rules from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9002,
+    "description": "Unknown error while retrieving data privacy rules audit history from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9003,
+    "description": "Unknown error while creating the data privacy rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9004,
+    "description": "Unknown error while updating the data privacy rule in database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9005,
+    "description": "Unknown error while deleting the data privacy rule from database.",
+    "severity": "ERROR",
+    "alertable": true
+  },
+  {
+    "code": 9006,
+    "description": "Unknown error while retrieving the list of configured data fields from database.",
+    "severity": "ERROR",
+    "alertable": true
+  }
+]

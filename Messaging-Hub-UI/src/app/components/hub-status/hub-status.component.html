@@ -1,0 +1,41 @@
+<h3>{{ "hubStatus.title" | translate }}</h3>
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="status.status === 'UP'">
+      <h5 class="card-title">
+        <i class="fa fa-check-circle ok" aria-hidden="true"></i>
+        {{ "hubStatus.operational" | translate }}
+      </h5>
+      <p class="card-text">{{ "hubStatus.allSystemsGood" | translate }}</p>
+    </div>
+    <div *ngIf="status.status === 'DOWN'">
+      <h5 class="card-title">
+        <i class="fa fa-exclamation-triangle error" aria-hidden="true"></i>
+        {{ "hubStatus.nonOperational" | translate }}
+      </h5>
+      <div class="card-text" *ngFor="let service of status.components">
+        {{ "hubStatus." + service.service_name | translate }}:
+        <span class="ok" *ngIf="service.status == 'UP'">
+          <b>{{ "hubStatus." + service.status | translate }}</b>
+        </span>
+        <span class="error" *ngIf="service.status != 'UP'">
+          <b>{{ "hubStatus." + service.status | translate }}</b>
+        </span>
+      </div>
+    </div>
+    <div *ngIf="status.status === 'UNREACHABLE'">
+      <h5 class="card-title">
+        <i class="fa fa-ban error" aria-hidden="true"></i>
+        {{ "hubStatus.unreachable" | translate }}
+      </h5>
+      <p class="card-text">{{ "errorsAPI." + unreachableError | translate }}</p>
+    </div>
+    <div *ngIf="status.status === 'UNKNOWN'">
+      <h5 class="card-title">
+        <i class="fa fa-question-circle info" aria-hidden="true"></i>
+        {{ "hubStatus.unknown" | translate }}
+      </h5>
+      <p class="card-text">{{ "hubStatus.noStatus" | translate }}</p>
+    </div>
+  </div>
+</div>

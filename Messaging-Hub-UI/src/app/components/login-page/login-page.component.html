@@ -1,0 +1,98 @@
+<div id="login-row" class="row">
+  <div id="login-column" class="col-md-6">
+    <div id="login-box" class="col-md-12 shadow">
+      <form
+        id="login-form"
+        class="form"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+      >
+        <h3>{{ "loginPage.title" | translate }}</h3>
+        <div class="form-group">
+          <label for="username">{{ "loginPage.userName" | translate }}</label
+          ><br />
+          <input
+            autocapitalize="none"
+            autocomplete="username"
+            type="text"
+            name="username"
+            id="username"
+            formControlName="username"
+            class="form-control"
+            [ngClass]="{
+              'is-valid': username.valid,
+              'is-invalid':
+                username.invalid && (username.dirty || username.touched)
+            }"
+            required
+          />
+          <div
+            *ngIf="username.invalid && (username.dirty || username.touched)"
+            class="invalid-feedback"
+          >
+            <div *ngIf="username.errors.required">
+              {{ "loginPage.usernameRequiredError" | translate }}
+            </div>
+            <div *ngIf="username.errors.minlength || username.errors.maxlength">
+              {{ "loginPage.usernameLengthError" | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">{{ "loginPage.password" | translate }}</label
+          ><br />
+          <input
+            autocapitalize="none"
+            autocomplete="current-password"
+            type="password"
+            name="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            [ngClass]="{
+              'is-valid': password.valid,
+              'is-invalid':
+                password.invalid && (password.dirty || password.touched)
+            }"
+            required
+          />
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="invalid-feedback"
+          >
+            <div *ngIf="password.errors.required">
+              {{ "loginPage.passwordRequiredError" | translate }}
+            </div>
+            <div *ngIf="password.errors.minlength || password.errors.maxlength">
+              {{ "loginPage.passwordLengthError" | translate }}
+            </div>
+          </div>
+          <a
+            class="small"
+            style="display: block; text-align: right;"
+            (click)="forgotPassword()"
+            >{{ "loginPage.forgotPassword" | translate }}</a
+          >
+        </div>
+        <div class="d-flex align-items-center mb-0">
+          <input
+            type="submit"
+            class="btn btn-primary"
+            value="{{ 'loginPage.submit' | translate }}"
+          />
+          <div
+            class="spinner-border text-light ml-3"
+            role="status"
+            *ngIf="showProgress"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </form>
+
+      <div class="login-error">
+        {{ loginError }}
+      </div>
+    </div>
+  </div>
+</div>

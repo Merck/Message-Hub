@@ -1,0 +1,37 @@
+<li class="nav-item dropdown no-arrow">
+  <a
+    class="nav-link dropdown-toggle"
+    id="userDropdown"
+    role="button"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="true"
+  >
+    <i class="fa fa-user fa-fw"></i>
+    <span class="mr-2 small">{{ userFullName }}</span>
+  </a>
+  <!-- Dropdown - User Information -->
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+    <a class="dropdown-item" (click)="orgDetails()" *ngIf="isOrgAdmin">
+      <i class="fa fa-building-o fa-sm fa-fw"></i>
+      {{ organizationName }}
+    </a>
+    <a class="dropdown-item" *ngIf="!isOrgAdmin">
+      <i class="fa fa-building-o fa-sm fa-fw"></i>
+      {{ organizationName }}
+    </a>
+   <a class="dropdown-item" (click)="changePassword()">
+      <i class="fa fa-key fa-sm fa-fw"></i>
+      {{ "toolbar.user.changePassword" | translate }}
+    </a>
+    <a class="dropdown-item" (click)="profileInfo()">
+      <i class="fa fa-user fa-sm fa-fw"></i>
+      {{ "toolbar.user.changePersonalInfo" | translate }}
+    </a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" (click)="logout()">
+      <i class="fa fa-sign-out fa-sm fa-fw"></i>
+      {{ "toolbar.user.signOut" | translate }}
+    </a>
+  </div>
+</li>

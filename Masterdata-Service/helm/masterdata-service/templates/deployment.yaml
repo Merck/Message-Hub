@@ -1,0 +1,171 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-charts.fullname" . }}
+  labels:
+    {{- include "helm-charts.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-charts.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "helm-charts.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm-charts.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          env:
+            - name: PGUSER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: pg.user
+            - name: PGPASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: pg.password
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: pg.host
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: pg.port
+            - name: PGDATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: pg.database
+            - name: PGCERT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: pg.cert
+            - name: RABBITMQ_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.protocol
+            - name: RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.host
+            - name: RABBITMQ_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.port
+            - name: RABBITMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.user
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.password
+            - name: RABBITMQ_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.cert
+            - name: RABBITMQ_MASTERDATA_EXCHANGE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.masterdata-exchange
+            - name: RABBITMQ_MASTERDATA_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.masterdata-queue
+            - name: RABBITMQ_MASTERDATA_DEADLETTER_EXCHANGE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.masterdata-deadletter-exchange
+            - name: RABBITMQ_MASTERDATA_DEADLETTER_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.masterdata-deadletter-queue
+            - name: RABBITMQ_MASTERDATA_HOLDING_EXCHANGE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.masterdata-holding-exchange
+            - name: RABBITMQ_MASTERDATA_HOLDING_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: rabbitmq.masterdata-holding-queue
+            - name: MASTERDATA_BFF
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: bffs.masterdata.bff
+            - name: ORGANIZATION_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.organization.service
+            - name: SEARCH_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.search.service
+            - name: ALERT_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.alert.service
+            - name: DATA_PRIVACY_RULES_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.commonConfig }}
+                  key: microservices.data.privacy.rules.service
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
