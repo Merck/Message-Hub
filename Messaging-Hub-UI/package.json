@@ -19,7 +19,7 @@
   "dependencies": {
     "@angular/animations": "~8.2.7",
     "@angular/cdk": "~8.2.3",
-    "@angular/common": "~8.2.7",
+    "@angular/common": "~20.3.34",
     "@angular/compiler": "~8.2.7",
     "@angular/core": "~8.2.7",
     "@angular/elements": "^8.2.7",
