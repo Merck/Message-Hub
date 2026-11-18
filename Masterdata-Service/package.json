@@ -36,7 +36,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "fast-xml-parser": "^3.17.4",
+    "fast-xml-parser": "^5.12.0",
     "jest": "^25.5.4",
     "json-rules-engine": "^5.0.3",
     "jsonpath": "^1.0.2",
